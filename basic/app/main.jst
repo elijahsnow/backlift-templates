@@ -1,0 +1,73 @@
+<!-- This is the main HTML template. It's a mustache template, blabla -->
+
+<div class="container">
+  <h1>Your first backlift app!</h1>
+  <div style="display:inline-block;position:relative">
+    <img class="tric" src="/app/images/tric-draw-small.png">
+  </div>
+
+  <div class="block">
+    <p>Welcome to backlift, the fastest way to deploy backbone.js based websites. This sample app is also an interactive tutorial. It will show you how to build a very simple backbone.js app, and highlight some of the features of a backlift that makes this process easy.</p>
+  </div>
+
+  <div class="block">
+
+    <h2>The basics</h2>
+    <img class="pull-right" src="/app/images/layout.png">
+    <p>At a minimum your backlift app has three files, a main javascript file, a javascript template (JST) file and a CSS file:</p>
+    <ul>
+      <li><strong><a href="/app/main.js">app/main.js:</a></strong>
+      This file contains the brains of your website. Here you define the data and logic that will make your website work. It contains the data model of your webapp, Views that display your data, and a router that maps URLs to Views. In this example there is just one view that renders the main template described below. </li>
+
+      <li><strong><a href="/app/main.jst">app/main.jst:</a></strong>
+      JST stands for JavaScript Template. The content of this file is combined with data and rendered into HTML. This is a very simple website with only one JST file. Larger sites will have several templates, one for each chunk of data that will be displayed. Also JST files can be rendered heirarchically, allowing a single JST to act as a layout for the whole website.</li>
+
+      <li><strong><a href="/app/styles.css">app/styles.css:</a></strong> controls how your website looks</li>
+    </ul>
+
+    <p>In addition there are a few additional project files:</p>
+
+    <ul>
+
+      <li><strong>the /libraries folder:</strong> This is where third party libraris, such as bootstrap.css and backbone.js go.</li>
+
+      <li><strong><a href="/.backlift">.backlift:</a></strong> This is the configuration file that determines how your project is packaged. By default all JST files are compiled and made available as attributes of the javascript window.JST variable. For more options, take a look at the comments in the file.
+    </ul>
+
+    <p>You may have noticed that there's no <strong>index.html</strong> file. If no index.html file exists in the project, backlift will create one automatically that includes links to the libraries and other files in your project.</p>
+
+  </div>
+
+  <div class="block">
+  <h2>An Example</h2>
+
+  <p>Joe is a designer-- but he's out of work. Let's give him some new projects by adding a data model to this website.</p>
+
+  <p>(picture of terminal window)</p>
+  <p>First go to the Terminal and change directory into your project folder. Then type "Backlift Watch."</p>
+  <p>(picture of text editor or something)</p>
+
+  <p>Now open up the "main.js" file and uncomment out the section labeled "projects collection". Each of Joe's projects are represented by a Project Model in the Projects collection.</p>
+
+  <p>Save the file and reload this webpage.</p>
+
+  <p>Now you can click on the desk and create new projects for for Joe. Don't worry, he's a fast worker... (click click click)</p>
+  </div>
+
+  <div class="block">
+  <h2>UNDER THE HOOD:</h2>
+
+  <p>Note that when you click on the table, new projects are added immediately. That's because the data is being sent to the server asynchronously. Backlift uses the backbone.js library to keep the data in sync with the server.</p>
+
+  <p>You can see the messages going back-and-forth by visiting your webapp's admin page. Check it out at ((url)). Here you can see the history and collections in use by this webapp.</p>
+  </div>
+
+  <div class="block">
+  FURTHER READING
+
+  To learn more about the backlift data model check out "Working with backbone.js models in backlift"
+  To learn about creating multi-page websites with abckbone check out "the backbone router"
+  To learn about ...
+  ... 
+  </div>
+</div>

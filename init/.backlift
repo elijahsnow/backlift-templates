@@ -1,15 +1,15 @@
 _app_id: {{ app_id }} # do not change
 
+
 # scripts: These javascript files will be packaged and linked
 # in order before any other .js files. File paths should be 
 # specified relative to the project root. They should not be 
 # compressed. 
 
-scripts:
-- libraries/scripts/jquery-1.7.1.js
-- libraries/scripts/underscore.js
-- libraries/scripts/backbone.js
-- libraries/scripts/bootstrap.js
+# scripts:
+# - scripts/lib/jquery-min.js
+# - scripts/lib/underscore.js
+# - scripts/lib/backbone.js
 
 
 # add_remaining_scripts: (Yes or No) If Yes, all .js files in 
@@ -23,15 +23,15 @@ scripts:
 # No if you were using a separate asset management library,
 # like require.js 
 
-add_remaining_scripts: yes
-
+add_remaining_scripts: No
 
 
 # styles: These stylesheets will be packaged and linked
 # in order before any other .css files, similar to scripts.
 
-styles:
-- libraries/styles/bootstrap.css
+# styles:
+# - styles/bootstrap.css
+# - styles/bootstrap-responsive.css
 
 
 # add_remaining_styles: (Yes or No) If Yes, all remaining 
@@ -39,4 +39,4 @@ styles:
 # into the app. If No, only the files listed in the 'styles' 
 # list will be linked.
 
-add_remaining_styles: yes
+add_remaining_styles: No
