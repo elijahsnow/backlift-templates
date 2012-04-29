@@ -2,7 +2,7 @@ backlift-templates
 ==================
 This project contains a set of templates that can be used to create new backlift apps. Templates can be downloaded using the backlift command line utility by using the create command:
 
-backlift create:&lt;template name&gt; &lt;app name&gt;
+	backlift create:<template name> <app name>
 
 
 **basic**: The basic template is the default for "backlift create." It includes a simple single page app with a tutorial that shows off some of the basics of backlift and backbone.js development.
