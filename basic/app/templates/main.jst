@@ -123,7 +123,6 @@ backlift watch</pre></p>
 
   <p>At the top of the admin page you can also see the tracks collection with the <code>xpos</code>, <code>ypos</code>, and <code>foot</code> attributes that we sent in the code above. How did backlift know about the tracks collection? We never created an API. Take another look at the tracks collection in <a href="/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
   <p><pre class="terminal">var Tracks = Backbone.Collection.extend({
-  model: Backbone.Model,
   url: 'backlift/tracks',
 });</pre></p>
   <p>As long as you prefix the <code>url</code> attribute of your collections with "backlift/", the backlift server will automatically store any data that you send via backbone's <code>save</code> or <code>create</code> methods. That's because backbone.js uses a standard RESTful API pattern for storing and retrieving collections. As a result, backlift knows what to expect. Specifically:</p>
@@ -140,7 +139,7 @@ backlift watch</pre></p>
 
   <div class="block">
   <h2>Next steps</h2>
-  <p>Backlift is adding new features constantly. Please keep an eye on <a href="backlift.com">backlift.com</a> for new examples and documentation.</p>
+  <p>Backlift is adding new features constantly. Please keep an eye on <a href="http://backlift.com">backlift.com</a> for new examples and documentation.</p>
   <p>You can download examples and starter templates directly with the <code>backlift create</code> command. Just type:</p>
   <p><pre class="terminal">backlift create:&lt;template name&gt; newapp </pre></p>
   <p>You can find a list of available templates on github at <a href="http://github.com/backlift/backlift-templates">github.com/backlift/backlift-templates</a>.</p>
