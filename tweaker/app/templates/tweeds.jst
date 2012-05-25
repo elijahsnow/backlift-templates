@@ -1,0 +1,23 @@
+<ul class="tweedlist">
+	<%  var dstr = 'MMMM d, yyyy hh:mm:ss'; 
+		var nouser = username === null;
+		for (var i=collection.length-1; i>=0; i--) {
+			item = collection.models[i];
+	    	if (nouser || username == item.get('_owner')) { %>
+				<li class='tweed'>
+					<div class='pull-right tweed-meta'>
+						<% if (nouser) { %> 
+							<span class="tweed-by"><%= item.get('_owner') %></span>
+						<% } else { %> 
+							<a class='del'>X</a>
+						<% } %>
+						<br>
+						<span class="tweed-created"><%= new Date(item.get('_created')).toString(dstr) %> </span>
+					</div>
+					<div class='tweed-message'>
+						<%= item.get('message') %> &nbsp;
+					</div>
+				</li>
+	<% 		}
+		} %>
+</ul>

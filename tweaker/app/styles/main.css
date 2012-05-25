@@ -1,0 +1,40 @@
+ul.tweedlist {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+li.tweed {
+	height: 40px;	
+	border: 1px solid #eee;
+	margin: 5px 0px 5px 0px;
+	padding: 0px 5px 0px 5px;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+div.tweed-meta {
+	text-align: right;
+}
+
+#new-tweed {
+	width: 210px;
+}
+
+#username {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+}
+
+#userstats {
+	border-bottom: 1px solid #eee;
+	padding: 10px 0px 10px 0px;
+	margin-bottom: 15px;
+}
+
+#add-tweed-form .actions {
+	text-align: right;	
+}
+
