@@ -12,9 +12,8 @@ scripts:
 - libraries/scripts/underscore.js
 - libraries/scripts/backbone.js
 - libraries/scripts/bootstrap.js
-- libraries/scripts/backlift-form-helper.js
-- libraries/scripts/backlift-auth-helper.js
-
+- libraries/scripts/backlift-helpers.js
+- setup.js
 
 # add_remaining_scripts: (Yes or No) If Yes, all .js files in 
 # the project will be packaged and linked to the main html 
@@ -27,11 +26,6 @@ scripts:
 # No if you were using a separate asset management library,
 # like require.js 
 
-
-# use globs instead of add remaining
-# underscore template docs (gives you line numbers) see underscore template documentation
-# jeremy free after elections
-# jeremy will pimp backboneconf link
 add_remaining_scripts: yes
 
 
@@ -40,7 +34,6 @@ add_remaining_scripts: yes
 
 styles:
 - libraries/styles/bootstrap.css
-
 
 # add_remaining_styles: (Yes or No) If Yes, all remaining 
 # .css files in the project will be packaged and linked 
@@ -54,5 +47,5 @@ collections:
   profiles:
     _public_permissions: { default: 'r', readonly: yes }
     _id: { type: 'auto:current_user', readonly: yes }
-  tweeds:
+  tweaks:
     message: { type: 'string', max: 25, required: yes }

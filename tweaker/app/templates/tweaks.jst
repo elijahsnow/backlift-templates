@@ -1,0 +1,26 @@
+<% var nouser = username === null; %>
+<% if (nouser) { %>
+  <h2> Recent tweaks </h2>
+<% } %>
+<ul class="tweaklist">
+  <%  var dstr = 'MMMM d, yyyy hh:mm:ss'; 
+    for (var i=collection.length-1; i>=0; i--) {
+      item = collection.models[i];
+      if (nouser || username == item.get('_owner')) { %>
+        <li class='tweak'>
+          <div class='pull-right tweak-meta'>
+            <% if (nouser) { %> 
+              <span class="tweak-by"><%= item.get('_owner') %></span>
+            <% } else { %> 
+              <a class='del'>X</a>
+            <% } %>
+            <br>
+            <span class="tweak-created"><%= new Date(item.get('_created')).toString(dstr) %> </span>
+          </div>
+          <div class='tweak-message'>
+            <%= item.get('message') %> &nbsp;
+          </div>
+        </li>
+  <%  }
+    } %>
+</ul>
