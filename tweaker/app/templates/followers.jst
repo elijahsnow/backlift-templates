@@ -1,0 +1,23 @@
+<ul class="tweaker-list">
+  <% _.each(users, function(item) { %>
+    <li class='tweaker-item' id='follower-<%= item %>'>
+      <div class='pull-right tweaker-meta'>
+        <% if (_.indexOf(filter, item) >= 0) { %>
+          <button class='follower btn btn-success' id='unfollow-<%= item %>'>following</button>
+        <% } else { %> 
+          <button class='follow btn' id='follow-<%= item %>'>follow</button>
+        <% } %>
+      </div>
+      <h1><%= item %> &nbsp;</h1>
+    </li>
+  <% }); %>
+</ul>
+<% if (addfollowers) { %>
+  <form class='form-inline' id='add-follower-form'>
+    <div class='control-group' id='follower'>
+      <input type='text' id='new-follower' name='follower'></input>
+      <input id='add-follower' class='btn btn-primary' type='submit' name='add' value='add follower'></input>
+      <label for='new-follower' class='control-label pull-left'><span class='errors'></span></label>
+    </div>
+  </form>
+<% } %>

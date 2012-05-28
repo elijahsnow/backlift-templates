@@ -12,7 +12,7 @@ scripts:
 - libraries/scripts/underscore.js
 - libraries/scripts/backbone.js
 - libraries/scripts/bootstrap.js
-- libraries/scripts/backlift-helpers.js
+- libraries/scripts/backlift-backbone-helpers.js
 - setup.js
 
 # add_remaining_scripts: (Yes or No) If Yes, all .js files in 

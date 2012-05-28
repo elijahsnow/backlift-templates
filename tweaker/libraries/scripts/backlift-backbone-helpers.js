@@ -1,4 +1,4 @@
-//  backlift-helpers.js
+//  backlift-backbone-helpers.js
 //  (c) 2012 Cole Krumbholz, SendSpree Inc.
 //
 //  This document may be used and distributed in accordance with 
@@ -92,13 +92,16 @@
 
   Backlift.cleanupFormErrors = function (view, prefix) 
   {
+    var selector = "*";
     if (typeof prefix === 'string') {
-      prefix += "_";
+      prefix += "_";      
+      selector = '[id^="'+prefix+'"]';
     } else {
       prefix = "";
     }
-    view.$('[id^="'+prefix+'"]').removeClass('error');
-    view.$('[id^="'+prefix+'"] .errors').empty();
+
+    view.$(selector).removeClass('error');
+    view.$(selector+' .errors').empty();
     view.$('#'+prefix+'form_errors').empty();    
   };
 

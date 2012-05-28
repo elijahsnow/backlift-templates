@@ -1,40 +1,71 @@
-ul.tweaklist {
+/* user view --------------------------- */
+
+#title {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  text-align: right;
+}
+
+#username {
+  padding-bottom: 10px;
+}
+
+#userstats {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0px 10px 0px;
+  margin-bottom: 15px;
+}
+
+.tabs-left .nav-tabs {
+  float: none;
+  margin-right: 0px;
+}
+
+/* tweak views -------------------------- */
+
+ul.tweaker-list {
   list-style-type: none;
   margin: 0px;
   padding: 0px;
 }
 
-li.tweak {
+li.tweaker-item {
   height: 40px; 
-  border: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   margin: 5px 0px 5px 0px;
-  padding: 0px 5px 0px 5px;
+  padding: 3px 5px 0px 5px;
 
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
 }
 
-div.tweak-meta {
+div.tweaker-meta {
   text-align: right;
-}
-
-#new-tweak {
-  width: 210px;
-}
-
-#username {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-#userstats {
-  border-bottom: 1px solid #eee;
-  padding: 10px 0px 10px 0px;
-  margin-bottom: 15px;
 }
 
 #add-tweak-form .actions {
   text-align: right;  
 }
 
+#new-tweak {
+  width: 210px;
+}
+
+/* follower views ----------------------- */
+
+.follower, .follow {
+  width: 100px;
+  margin-top: 4px;
+}
+
+#add-follower-form {
+  padding-top: 10px;
+}
+
+#add-follower {
+  width: 100px;
+  margin-left: 10px;
+}
+
+#new-follower {
+  width: 571px;
+}
