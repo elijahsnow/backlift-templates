@@ -9,7 +9,7 @@ This project contains a set of templates that can be used to create new backlift
 
 **blank**: An empty app template, styled with Twitter Bootstrap. Contains a menubar, a landing page and a secondary page. Demonstrates how to organize a view heirarchy, and how to refresh subviews without reloading the whole site.
 
-**auth**: An app template with user sign-in funcitonality, styled with Twitter Bootstrap. Contains a landing page and two pages that can only be accessed by a logged in user. Demonstrates how to reuse common layouts across public and private pages, and how to manage a generic login form. 
+**auth**: An app template with user sign-in functionality, styled with Twitter Bootstrap. Contains a landing page and two pages that can only be accessed by a logged-in user. Demonstrates how to reuse common layouts across public and private pages, and how to manage a generic login form. 
 
 ## examples ##
 
