@@ -3,7 +3,6 @@ var randomColor = function() {
 };
 
 var Palette = Backbone.Model.extend({
-  idAttribute: "_id",
   defaults: function() {
     return {
       name: "Untitled",
@@ -16,7 +15,7 @@ var defaultPalette = new Palette;
 
 var PaletteList = Backbone.Collection.extend({
   model: Palette,
-  url: 'backlift/palettes'
+  url: '/backliftapp/palettes'
 });
 
 var PaletteView = Backbone.View.extend({

@@ -12,10 +12,6 @@ $(function(){
   // Our basic **Todo** model has `title`, `order`, and `done` attributes.
   var Todo = Backbone.Model.extend({
 
-    // Backlift edit: set the idAttribute so the model is saved correctly
-    // in the backlift database
-    idAttribute: '_id',
-
     // Default attributes for the todo item.
     defaults: function() {
       return {
@@ -54,8 +50,8 @@ $(function(){
     // Reference to this collection's model.
     model: Todo,
 
-    // Backlift edit: set the url to a string prefixed by 'backlift/'
-    url: 'backlift/todos',
+    // Backlift edit: set the url to a string prefixed by '/backliftapp/'
+    url: '/backliftapp/todos',
 
     // Backlift edit: Local storage is no longer needed since we're using backlift!
     // localStorage: new Store("todos-backbone"),

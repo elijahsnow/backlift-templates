@@ -1,0 +1,7 @@
+<ul class="nav">
+<% for (var i in options) { var option = options[i]; %>
+  <li <%= option == current ? 'class="active"' : '' %>>
+    <a href='/<%= option %>' id='nav-<%= option %>'><%= option %></a>
+  </li>
+<% }; %>
+</ul>

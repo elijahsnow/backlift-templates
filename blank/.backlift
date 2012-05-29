@@ -1,5 +1,6 @@
 _app_id: {{ app_id }} # do not change
 
+
 # scripts: These javascript files will be packaged and linked
 # in order before any other .js files. File paths should be 
 # specified relative to the project root. They should not be 
@@ -7,10 +8,11 @@ _app_id: {{ app_id }} # do not change
 
 scripts:
 - libraries/scripts/jquery-1.7.1.js
+- libraries/scripts/jquery.cookie.js
 - libraries/scripts/underscore.js
 - libraries/scripts/backbone.js
 - libraries/scripts/bootstrap.js
-
+- setup.js
 
 # add_remaining_scripts: (Yes or No) If Yes, all .js files in 
 # the project will be packaged and linked to the main html 
@@ -26,13 +28,11 @@ scripts:
 add_remaining_scripts: yes
 
 
-
 # styles: These stylesheets will be packaged and linked
 # in order before any other .css files, similar to scripts.
 
 styles:
 - libraries/styles/bootstrap.css
-
 
 # add_remaining_styles: (Yes or No) If Yes, all remaining 
 # .css files in the project will be packaged and linked 

@@ -1,30 +1,7 @@
-<!--
-// Copyright (c) 2012 SendSpree Inc.
-// 
-// Permission is hereby granted, free of charge, to any person obtaining 
-// a copy of this software and associated documentation files (the 
-// "Software"), to deal in the Software without restriction, including 
-// without limitation the rights to use, copy, modify, merge, publish, 
-// distribute, sublicense, and/or sell copies of the Software, and to 
-// permit persons to whom the Software is furnished to do so, subject 
-// to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be 
-// included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
-// CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
-// SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
--->
-
 <div class="container">
   <h1>Your first backlift app!</h1>
   <div style="display:inline-block;position:relative">
-    <img class="tric" src="/app/images/tric-draw-small.png">
+    <img class="tric" src="/public/app/images/tric-draw-small.png">
   </div>
 
   <div class="block">
@@ -34,16 +11,16 @@
   <div class="block">
 
     <h2>The basics</h2>
-    <img class="pull-right inline-img" src="/app/images/layout.png">
+    <img class="pull-right inline-img" src="/public/app/images/layout.png">
     <p>At a minimum your backlift app has three files, a main javascript file, a javascript template (JST) file and a CSS file:</p>
     <ul>
-      <li><strong><a href="/app/scripts/main.js">app/scripts/main.js:</a></strong>
+      <li><strong><a href="/public/app/scripts/main.js">app/scripts/main.js:</a></strong>
       This file contains the brains of your website. At a minimum it contains a router that maps URLs to Views. It can also contain you data Models and Collections, and Views that display the data. In this example main.js contains just one view that renders the main template described below. </li>
 
-      <li><strong><a href="/app/templates/main.jst">app/templates/main.jst:</a></strong>
+      <li><strong><a href="/public/app/templates/main.jst">app/templates/main.jst:</a></strong>
       JST stands for JavaScript Template. Templates are combined with data from your model and "rendered" into HTML. Larger sites may have several templates, one for each chunk of data that will be displayed. Also JST files can be rendered heirarchically, allowing one JST to act as a layout for the rest of the website.</li>
 
-      <li><strong><a href="/app/styles/styles.css">app/styles/styles.css:</a></strong> controls how your website looks</li>
+      <li><strong><a href="/public/app/styles/styles.css">app/styles/styles.css:</a></strong> controls how your website looks</li>
     </ul>
 
     <p>There are a few additional project files:</p>
@@ -54,6 +31,8 @@
 
       <li><strong>the .backlift file:</strong> This is the configuration file that determines how your project is packaged. By default all JST files are compiled and made available as attributes of the javascript window.JST variable. For more options, take a look at the comments in the file.
     </ul>
+
+    <p>After your files are uploaded using <code>backlift push</code> they will be publicly accessible at <code>&lt;your app  id&gt;.backliftapp.com/public/&lt;file path&gt;</code>. (see the links above for an example) This avoids conflicts between your public files, and paths that you might set up using your backbone router.</p>
 
     <p>You may have noticed that there's no <strong>index.html</strong> file. If no index.html file exists in the project, backlift will create one automatically that includes links to the scripts, styles, templates and other files in your app.</p>
 
@@ -82,7 +61,7 @@
 backlift watch</pre></p>
       <p>This command will track changes in your app folder, and automatically sync those changes with backlift.</p>
     </li><li>
-      <p>Now open up the <a href="/app/scripts/main.js">app/scripts/main.js</a> file and find the following section:</p>
+      <p>Now open up the <a href="/public/app/scripts/main.js">app/scripts/main.js</a> file and find the following section:</p>
       <p><pre class="terminal">// // UNCOMMENT ME TO ENABLE DINOSAUR TRACKS!
 // var tracksview = new window.TracksView();
 // $('#tracks-container').html(tracksview.render().el);</pre></p>
@@ -90,8 +69,8 @@ backlift watch</pre></p>
       <p>By adding this code into your main view, you are taking advantage of two additional files included in this app:</p>
       <p>
         <ul>
-          <li><strong><a href="/app/scripts/tracks.js">app/scripts/tracks.js:</a></strong> This file contains a backbone model, collection and view for adding and rendering dinosaur tracks.</li>
-          <li><strong><a href="/app/templates/tracks.jst">app/templates/tracks.jst:</a></strong> A small JavaScript Template that renders out the collection of footprints passed to it via the <code>collections</code> attribute.
+          <li><strong><a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></strong> This file contains a backbone model, collection and view for adding and rendering dinosaur tracks.</li>
+          <li><strong><a href="/public/app/templates/tracks.jst">app/templates/tracks.jst:</a></strong> A small JavaScript Template that renders out the collection of footprints passed to it via the <code>collections</code> attribute.
         </ul>
       </p>
     </li><li>
@@ -108,7 +87,7 @@ backlift watch</pre></p>
 
   <h3>Asynchronous updates</h3>
 
-  <p>Note that when you click in the box above, new footprints are added immediately. That's because the data is being sent to the server asynchronously. Take a look at the <code>addFootprint</code> method in <a href="/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
+  <p>Note that when you click in the box above, new footprints are added immediately. That's because the data is being sent to the server asynchronously. Take a look at the <code>addFootprint</code> method in <a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
   <p><pre class="terminal"> addFootprint: function(ev) {
 
     ...
@@ -121,20 +100,20 @@ backlift watch</pre></p>
 
   <h3>API Discovery</h3>
 
-  <p>At the top of the admin page you can also see the tracks collection with the <code>xpos</code>, <code>ypos</code>, and <code>foot</code> attributes that we sent in the code above. How did backlift know about the tracks collection? We never created an API. Take another look at the tracks collection in <a href="/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
+  <p>At the top of the admin page you can also see the tracks collection with the <code>xpos</code>, <code>ypos</code>, and <code>foot</code> attributes that we sent in the code above. How did backlift know about the tracks collection? We never created an API. Take another look at the tracks collection in <a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
   <p><pre class="terminal">var Tracks = Backbone.Collection.extend({
-  url: 'backlift/tracks',
+  url: '/backliftapp/tracks',
 });</pre></p>
-  <p>As long as you prefix the <code>url</code> attribute of your collections with "backlift/", the backlift server will automatically store any data that you send via backbone's <code>save</code> or <code>create</code> methods. That's because backbone.js uses a standard RESTful API pattern for storing and retrieving collections. As a result, backlift knows what to expect. Specifically:</p>
+  <p>As long as you prefix the <code>url</code> attribute of your collections with "/backliftapp/", the backlift server will automatically store any data that you send via backbone's <code>save</code> or <code>create</code> methods. That's because backbone.js uses a standard RESTful API pattern for storing and retrieving collections. As a result, backlift knows what to expect. Specifically:</p>
   <p>
     <ul>
-      <li><strong>GET /backlift/&lt;collection&gt;</strong>: will retrieve a list of the items in the collection.</li>
-      <li><strong>POST /backlift/&lt;collection&gt;</strong>: will create a new item and add it to the collection.</li>
-      <li><strong>PUT /backlift/&lt;collection&gt;/&lt;item_id&gt;</strong>: will update an item in the collection.</li>
-      <li><strong>DELETE /backlift/&lt;collection&gt;/&lt;item_id&gt;</strong>: will delete an item.</li>
+      <li><strong>GET /backliftapp/&lt;collection&gt;</strong>: will retrieve a list of the items in the collection.</li>
+      <li><strong>POST /backliftapp/&lt;collection&gt;</strong>: will create a new item and add it to the collection.</li>
+      <li><strong>PUT /backliftapp/&lt;collection&gt;/&lt;item_id&gt;</strong>: will update an item in the collection.</li>
+      <li><strong>DELETE /backliftapp/&lt;collection&gt;/&lt;item_id&gt;</strong>: will delete an item.</li>
     </ul>
   </p>
-  <p>Backlift stores the data as JSON documents. That means you don't need to spend time defining the schema in advance. Backlift will happily persist any object with any set of attributes and make it available for retreival. Later when you want to deploy your app in a production environment, backlift will allow you to setup validation and authorization via the backlift admin panel. (coming soon!)</p>
+  <p>Backlift stores the data as JSON documents. That means you don't need to spend time defining the schema in advance. Backlift will happily persist any object with any set of attributes and make it available for retreival. Later when you want to deploy your app in a production environment, you can setup validation via the .backlift config file or the admin panel. (coming soon!)</p>
   </div>
 
   <div class="block">
