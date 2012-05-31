@@ -46,5 +46,5 @@ add_remaining_styles: yes
 
 collections:
   users:
-    _public_permissions: { default: 'r', readonly: yes }
+    _public_permissions: { default: '', readonly: yes }
     _id: { type: 'auto:current_user', readonly: yes }
