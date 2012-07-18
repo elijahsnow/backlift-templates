@@ -115,19 +115,18 @@
     + "  </div>"
     + "  <div class='modal-body'>"
     + "    <div class='row'><div class='span3' style='margin-left: 30px'>"
-    + "      <form class='form' style='margin:0' id='login_form' action='/backlift/auth/login' method='POST'>"
+    + "      <form class='form' style='margin:0' id='login_form' action='' method='POST'>"
     + "      <div id='login_form_errors' style='color:red'></div>"
-    + "      <input type='hidden' name='next' value='/admin-emails.html'>"
 
-    + "    <div class='control-group' id='login_username'>"
+    + "      <div class='control-group' id='login_username'>"
     + "        <label class='control-label'>username  <span class='errors'></span>"
     + "        <input type='text' name='username'/></label>"
-    + "    </div>"
+    + "      </div>"
 
-    + "    <div class='control-group' id='login_password'>"
+    + "      <div class='control-group' id='login_password'>"
     + "        <label class='control-label'>password <span class='errors'></span>"
     + "        <input type='password' name='password'/></label>"
-    + "    </div>"
+    + "      </div>"
 
     + "      <input type='submit' style='margin-top:18px' id='login-submit' class='btn btn-primary'>"
     + "      </form>"
@@ -146,6 +145,8 @@
     },
 
     events: {
+      "click #forgot-link" : "_forgot_clicked",
+      "click #forgot-submit" : "_forgot_submitted",
       "click #login-submit" : "_login_submitted",
     },
 
@@ -164,8 +165,28 @@
       }
     },
 
+    _forgot_submitted: function () {
+      var that = this;
+      Backlift.cleanupFormErrors(this, "forgot");
+      Backlift.cleanupFormErrors(this, "login");
+      var that = this;
+      $.ajax({
+        type: 'POST',
+        url: '/backlift/auth/password/forgot',
+        data: $('#forgot_form').serialize(),
+        error: this._make_error_fn("forgot"),
+        success: function () {
+          that.$('#forgot-submit').addClass('disabled');
+          that.$el.undelegate('#forgot-submit', 'click');
+          that.$('#recover-ok').fadeIn();          
+        }
+      });
+      return false;
+    },
+
     _login_submitted: function () {
       var that = this;
+      Backlift.cleanupFormErrors(this, "forgot");
       Backlift.cleanupFormErrors(this, "login");
       $.ajax({
         type: 'POST',
@@ -175,6 +196,10 @@
         error: this._make_error_fn("login"),
       });
       return false;
+    },
+
+    _forgot_clicked: function () {
+      this.$("#forgotten-password").show();
     },
 
     _show: function() {
@@ -202,15 +227,17 @@
         // the url attribute will return a baseURL 
         var url = _.isFunction(this.model.url) ? this.model.url() : this.model.url;
         url += '/'+$.cookie('user');
+
         var that = this;
+        var got_user_fn = function() { that.success(that.model); }
         this.model.fetch({
           url: url,
           error: function (model, xhr) {
             if (xhr.status == 404) {
-              model.save(null, {success: that.success});
+              model.save(null, {success: got_user_fn});
             }
           },
-          success: this.success,
+          success: got_user_fn,
         });
       }
     },
@@ -225,60 +252,66 @@
     + "  <div class='modal-header'>"
     + "    <h3 style='margin-left: 10px'>Please Sign-in</h3>"
     + "  </div>"
-    + "  <div class='modal-body'>"
-    + "    <div class='row'><div class='span3' style='margin-left: 30px'>"
+    + "  <div class='modal-body'><div class='row'>"
+    + "    <div class='span3' style='margin-left: 30px'>"
     + "      <h4 style='margin-bottom: 10px'>Use existing account</h4>"
-    + "      <form class='form' style='margin:0' id='login_form' action='/backlift/auth/login' method='POST'>"
-    + "      <div id='login_form_errors' style='color:red'></div>"
-    + "      <input type='hidden' name='next' value='/admin-emails.html'>"
+    + "      <form class='form' style='margin:0' id='login_form' action='' method='POST'>"
+    + "        <div id='login_form_errors' style='color:red'></div>"
 
-    + "    <div class='control-group' id='login_username'>"
-    + "        <label class='control-label'>username  <span class='errors'></span>"
-    + "        <input type='text' name='username'/></label>"
-    + "    </div>"
+    + "        <div class='control-group' id='login_username'>"
+    + "          <label class='control-label'>username  <span class='errors'></span>"
+    + "          <input type='text' name='username'/></label>"
+    + "        </div>"
 
-    + "    <div class='control-group' id='login_password'>"
-    + "        <label class='control-label'>password  <span class='errors'></span>"
-    + "        <input type='password' name='password'/></label>"
-    + "    </div>"
+    + "        <div class='control-group' id='login_password'>"
+    + "          <label class='control-label'>password  <span class='errors'></span>"
+    + "          <input type='password' name='password'/></label>"
+    + "        </div>"
 
-    + "      <input type='submit' style='margin-top:18px' id='login-submit' class='btn btn-primary'>"
+    + "        <input type='submit' style='margin-top:18px' id='login-submit' class='btn btn-primary'>"
     + "      </form>"
 
     + "    </div><div class='span3' style='margin-left: 70px'>"
     + "      <h4 style='margin-bottom: 10px'>Create new account</h4>"
-    + "      <form class='form' style='margin:0' id='register_form' action='/backlift/auth/register' method='POST'>"
-    + "      <div id='register_form_errors' style='color:red'></div>"
-    + "      <input type='hidden' name='next' value='/admin-emails.html'>"
+    + "      <form class='form' style='margin:0' id='register_form' action='' method='POST'>"
+    + "        <div id='register_form_errors' style='color:red'></div>"
 
-    + "    <div class='control-group' id='register_username'>"
-    + "        <label class='control-label'>username  <span class='errors'></span>"
-    + "        <input type='text' name='username'/></label>"
-    + "    </div>"
+    + "        <div class='control-group' id='register_username'>"
+    + "          <label class='control-label'>username  <span class='errors'></span>"
+    + "          <input type='text' name='username'/></label>"
+    + "        </div>"
 
-    + "    <div class='control-group' id='register_password'>"
-    + "        <label class='control-label'>password  <span class='errors'></span>"
-    + "        <input type='password' name='password'/></label>"
-    + "    </div>"
+    + "        <div class='control-group' id='register_password1'>"
+    + "          <label class='control-label'>password  <span class='errors'></span>"
+    + "          <input type='password' name='password1'/></label>"
+    + "        </div>"
 
-    + "    <div class='control-group' id='register_password2'>"
-    + "        <label class='control-label'>password (again) <span class='errors'></span>"
-    + "        <input type='password' name='password2'/></label>"
-    + "    </div>"
+    + "        <div class='control-group' id='register_password2'>"
+    + "          <label class='control-label'>password (again) <span class='errors'></span>"
+    + "          <input type='password' name='password2'/></label>"
+    + "        </div>"
 
-    + "      <input type='submit' style='margin-top:18px' id='register-submit' class='btn btn-primary'>"
+    + "        <div class='control-group' id='register_email'>"
+    + "          <label class='control-label'>email  <span class='errors'></span>"
+    + "          <input type='string' name='email'/></label>"
+    + "        </div>"
+
+    + "        <input type='submit' style='margin-top:18px' id='register-submit' class='btn btn-primary'>"
     + "      </form>"
-    + "    </div></div>"
-    + "  </div>"
+    + "    </div>"
+    + "  </div></div>"
     + "</div>",
 
     events: {
+      "click #forgot-link" : "_forgot_clicked",
+      "click #forgot-submit" : "_forgot_submitted",
       "click #login-submit" : "_login_submitted",
       "click #register-submit" : "_register_submitted",
     },
 
     _register_submitted: function () {
       var that = this;
+      Backlift.cleanupFormErrors(this, "forgot");
       Backlift.cleanupFormErrors(this, "login");
       Backlift.cleanupFormErrors(this, "register");
       $.ajax({
@@ -289,6 +322,11 @@
         error: this._make_error_fn("register"),
       });
       return false;
+    },
+
+    _forgot_submitted: function() {
+      Backlift.cleanupFormErrors(this, "register");
+      return Backlift.LoginView.prototype._login_submitted.call(this);
     },
 
     _login_submitted: function() {

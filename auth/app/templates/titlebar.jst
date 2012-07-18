@@ -6,7 +6,7 @@
     <div id="menu"></div>
     <div class="userblock pull-right">
       <% if (username) { %>
-        <span class="brand"><%= username %></span>
+          <a class="brand" href="/home"><%= username %></a>
         <a href="/backlift/auth/logout?_next=/">
           <button class="btn">Sign-Out</button>
         </a>

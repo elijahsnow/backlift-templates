@@ -10,108 +10,14 @@ App.MainRouter = Backbone.Router.extend({
     "": "landingPage",
     "home": "homeHandler",
     "other": "otherHandler",
+    "email-verified": "verifiedHandler",
+    "*path": "notFoundHandler",
   },
 
 
-  // _with_user: should be called when handling any route
-  // that needs access to user data. Creates the App.user
-  // object, attaches a login view to the $('body')
-  // element, and fetches the user. Calls do_function
-  // once the user is fetched, with this as the context.
-
-  _with_user: function (do_function) {
-
-    if (!App.user) {
-
-      // create user
-      App.user = new App.UserModel({
-        // TODO: put default user attributes here
-      });
-
-      // a function that will be called once user fetched
-      var that = this;
-      var on_user_fetched = function() {
-        do_function.call(that);
-      }
-
-      // login if needed, and fetch the user model
-      var loginView = new Backlift.LoginRegisterView({
-        model: App.user,
-        success: on_user_fetched,
-      });
-      loginView.fetchUserModel();
-
-    } else {
-      do_function.call(this);
-    }
-  },
-
-  
-  // _render_layout(contentView, menuView):
-  // renders the contentView into the main page layout template
-  // and optionally renders a menu into the titlebar
-
-  _render_layout: function(contentView, menuView) {
-
-    if (!App.layoutView) {
-
-      // the top titlebar, may contain a menu
-      App.titlebarView = new App.CommonView({
-        template: JST.titlebar,
-        subviews: {
-          '#menu': menuView,
-        }
-      }); 
-
-      // the main layout view where all content goes
-      App.layoutView = new App.CommonView({
-        template: JST.layout, 
-        subviews: {
-          '#titlebar': App.titlebarView,
-          '#content': contentView,
-        },
-      });
-
-      $('body').append(App.layoutView.render().el);      
-
-    } else {
-      App.layoutView.renderSubview('#content', contentView);
-      App.titlebarView.renderSubview('#menu', menuView);
-    }
-  },
-
-
-  // _make_menu: convenience function for creating a 
-  // menu view
-
-  _make_menu: function(options, current) {
-    return new App.CommonView({
-      template: JST.menu,
-      params: {
-        options: options,
-        current: current,
-      },
-      events: {
-        'click [id^="nav-"]': function (ev) {
-          var link = $(ev.target).attr('href');
-          App.mainRouter.navigate(link, {trigger: true});
-          return false;
-        }
-      }
-    });
-  },
-
-
-  // landingPage: the public home page. Displayed if
-  // no user is logged in
+  // landingPage: the public home page
 
   landingPage: function () {
-
-    // redirect if user logged in
-
-    if ($.cookie('user')) {
-      return this.homeHandler();
-    }
 
     App.user = null;
 
@@ -119,7 +25,8 @@ App.MainRouter = Backbone.Router.extend({
       template: JST.landing, 
     });
 
-    this._render_layout(landingView);
+    App.render_layout(landingView);
+
   },
 
 
@@ -127,15 +34,15 @@ App.MainRouter = Backbone.Router.extend({
 
   homeHandler: function () {
 
-    this._with_user( function () {
+    App.with_user( function (user) {
 
       var homeView = new App.CommonView({
         template: JST.home,
       });
 
-      var menu = this._make_menu(['home', 'other'], 'home');
+      var menu = App.make_menu(['home', 'other'], 'home');
 
-      this._render_layout(homeView, menu);
+      App.render_layout(homeView, menu);
 
     });
   },
@@ -145,10 +52,10 @@ App.MainRouter = Backbone.Router.extend({
   
   otherHandler: function () {
 
-    this._with_user( function () {
+    App.with_user( function (user) {
   
       var userStatsView = new App.UserStatsView({
-        model: App.user,
+        model: user,
       });
 
       var otherView = new App.CommonView({
@@ -158,11 +65,35 @@ App.MainRouter = Backbone.Router.extend({
         },
       });
 
-      var menu = this._make_menu(['home', 'other'], 'other');
+      var menu = App.make_menu(['home', 'other'], 'other');
 
-      this._render_layout(otherView, menu);
+      App.render_layout(otherView, menu);
 
     });
+  },
+
+
+  // verifiedHandler: the page users see after they
+  // verify their email address
+
+  verifiedHandler: function() {
+
+    var verifiedView = new App.CommonView({
+      template: JST.verified,
+    });
+
+    var menu = App.make_menu(['home', 'other']);
+
+    App.render_layout(verifiedView, menu);
+
+  },
+
+
+  // notFoundHandler: any invalid url will be redirected
+  // here
+
+  notFoundHandler: function() {
+    App.mainRouter.navigate('/');
   },
 
 });
