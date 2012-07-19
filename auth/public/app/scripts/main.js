@@ -92,8 +92,8 @@ App.MainRouter = Backbone.Router.extend({
   // notFoundHandler: any invalid url will be redirected
   // here
 
-  notFoundHandler: function() {
-    App.mainRouter.navigate('/');
+  notFoundHandler: function(path) {
+    window.location.replace('/backlift/error/404'+path);
   },
 
 });

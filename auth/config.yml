@@ -7,14 +7,14 @@ _app_id: {{ app_id }} # do not change
 # compressed. 
 
 scripts:
-- libraries/scripts/jquery-1.7.1.js
-- libraries/scripts/jquery.cookie.js
-- libraries/scripts/underscore.js
-- libraries/scripts/backbone.js
-- libraries/scripts/bootstrap.js
-- libraries/scripts/date.js
-- libraries/scripts/backlift-backbone-helpers.js
-- setup.js
+- public/libraries/scripts/jquery-1.7.1.js
+- public/libraries/scripts/jquery.cookie.js
+- public/libraries/scripts/underscore.js
+- public/libraries/scripts/backbone.js
+- public/libraries/scripts/bootstrap.js
+- public/libraries/scripts/date.js
+- public/libraries/scripts/backlift-backbone-helpers.js
+- public/setup.js
 
 # add_remaining_scripts: (Yes or No) If Yes, all .js files in 
 # the project will be packaged and linked to the main html 
@@ -34,7 +34,7 @@ add_remaining_scripts: yes
 # in order before any other .css files, similar to scripts.
 
 styles:
-- libraries/styles/bootstrap.css
+- public/libraries/styles/bootstrap.css
 
 # add_remaining_styles: (Yes or No) If Yes, all remaining 
 # .css files in the project will be packaged and linked 
