@@ -6,18 +6,6 @@
   text-align: right;
 }
 
-#username {
-  padding-bottom: 10px;
-}
-
-#userstats {
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  padding: 10px 0px 10px 0px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
 .tabs-left .nav-tabs {
   float: none;
   margin-right: 0px;

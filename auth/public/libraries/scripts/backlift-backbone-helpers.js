@@ -293,7 +293,7 @@
 
     + "        <div class='control-group' id='register_email'>"
     + "          <label class='control-label'>email  <span class='errors'></span>"
-    + "          <input type='string' name='email'/></label>"
+    + "          <input type='text' name='email'/></label>"
     + "        </div>"
 
     + "        <input type='submit' style='margin-top:18px' id='register-submit' class='btn btn-primary'>"

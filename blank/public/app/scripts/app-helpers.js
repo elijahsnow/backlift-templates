@@ -1,3 +1,4 @@
+//  app-helpers.js
 //  (c) 2012 Cole Krumbholz, SendSpree Inc.
 //
 //  This document may be used and distributed in accordance with 
@@ -5,11 +6,68 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-// window.App: the global App object. After this line, you can
-// attach new objects to the App name space like so:
-// App.MyAppObject = {}
+// render_layout(contentView, menuView):
+// renders the contentView into the main page layout template
+// and optionally renders a menu into the titlebar. It
+// wont render the whole page unless it needs to.
 
-window.App = {}
+App.render_layout = function(contentView, menuView) {
+
+  if (!App.layoutView) {
+
+    // the top titlebar, may contain a menu
+    App.titlebarView = new App.CommonView({
+      template: JST.titlebar,
+      subviews: {
+        "#menu": menuView,
+      }
+    }); 
+
+    // the main layout view where all content goes
+    App.layoutView = new App.CommonView({
+      template: JST.layout, 
+      subviews: {
+        "#titlebar": App.titlebarView,
+        "#content": contentView,
+      },
+    });
+
+    $("body").append(App.layoutView.render().el);      
+
+  } else {
+    App.layoutView.renderSubview("#content", contentView);
+    App.titlebarView.renderSubview("#menu", menuView);
+  }
+};
+
+
+// make_menu: convenience function for creating a 
+// menu view. The options parameter is an object
+// with option names as keys and links as values.
+// The current parameter is the current selected
+// option, if given. Example:
+//
+//   App.make_menu({
+//     home: "/", 
+//     other: "/other"
+//   }, 'home');
+
+App.make_menu = function(options, current) {
+  return new App.CommonView({
+    template: JST.menu,
+    params: {
+      options: options,
+      current: current,
+    },
+    events: {
+      "click [id^='nav-']": function (ev) {
+        var link = $(ev.target).attr("href");
+        App.mainRouter.navigate(link, {trigger: true});
+        return false;
+      }
+    }
+  });
+};
 
 
 // App.CommonView : a convenience View class that facilitates
@@ -18,14 +76,17 @@ window.App = {}
 // collection and the current username. Then attaches the given 
 // subviews according to jquery selectors.
 
-var commonViewOptions = ['template', 'params', 'subviews', 'render_on', 'events'];
+var commonViewOptions = ["template", "params", "subviews", "render_on", "events"];
 
 App.CommonView = Backbone.View.extend({
 
   // initialize(options):
   //
   //   options.template: (required)
-  //     the template used to render the view
+  //     the template used to render the view.
+  //     This can be a function or a string. If
+  //     the later, the string will be passed as
+  //     the first argument to _.template()
   //
   //   options.params: (optional)
   //     an object with a list of key-value pairs
@@ -33,11 +94,10 @@ App.CommonView = Backbone.View.extend({
   //     rendered. If any value is a function, it
   //     will be called at render time as a 
   //     method of the CommonView object. (the 
-  //     'this' variable will refer to the view).
+  //     "this" variable will refer to the view).
   //     Example:
   //
   //       options.params = {
-  //         name: 'a name',
   //         count: function () {
   //           return this.collection.length;
   //         },
@@ -50,8 +110,8 @@ App.CommonView = Backbone.View.extend({
   //     the subviews will be attached to the DOM
   //     based on the keys. Example:
   //
-  //       options.templates = {
-  //         '#title': titleView,
+  //       options.subviews = {
+  //         "#title": titleView,
   //       };
   //
   //   options.render_on: (optional)
@@ -99,19 +159,23 @@ App.CommonView = Backbone.View.extend({
     var params = _.clone(this.params);
 
     // add common context
-    params.username = $.cookie('user');
+    params.username = $.cookie("user");
     if (this.model) params.model = this.model;
     if (this.collection) params.collection = this.collection;
 
     // call any parameter functions
     for (k in params) {
-      if (typeof params[k] === 'function') {
+      if (typeof params[k] === "function") {
         params[k] = params[k].call(this);
       }
     }
 
     // render template
-    this.$el.html(this.template(params));
+    if (typeof this.template === "function") {
+      this.$el.html(this.template(params));
+    } else {
+      this.$el.html(_.template(this.template, params));
+    }
 
     // render subviews
     for (var s in this.subviews) {
@@ -146,7 +210,7 @@ App.CommonView = Backbone.View.extend({
   //     If true, also call delegateEvents for the subview.
 
   renderSubview: function(selector, view, reDelegate) {
-    if (typeof view === 'boolean') {
+    if (typeof view === "boolean") {
       reDelegate = view;
       view = null;
     }

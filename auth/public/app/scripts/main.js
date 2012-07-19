@@ -8,8 +8,8 @@ App.MainRouter = Backbone.Router.extend({
 
   routes: {
     "": "landingPage",
-    "home": "homeHandler",
-    "other": "otherHandler",
+    "home": "homePage",
+    "other": "otherPage",
     "email-verified": "verifiedHandler",
     "*path": "notFoundHandler",
   },
@@ -32,7 +32,7 @@ App.MainRouter = Backbone.Router.extend({
 
   // homeHandler: the user's home page
 
-  homeHandler: function () {
+  homePage: function () {
 
     App.with_user( function (user) {
 
@@ -40,7 +40,10 @@ App.MainRouter = Backbone.Router.extend({
         template: JST.home,
       });
 
-      var menu = App.make_menu(['home', 'other'], 'home');
+      var menu = App.make_menu({
+        home: "/home", 
+        other: "/other"
+      }, "home");
 
       App.render_layout(homeView, menu);
 
@@ -50,7 +53,7 @@ App.MainRouter = Backbone.Router.extend({
 
   // otherHandler: another user page
   
-  otherHandler: function () {
+  otherPage: function () {
 
     App.with_user( function (user) {
   
@@ -61,11 +64,14 @@ App.MainRouter = Backbone.Router.extend({
       var otherView = new App.CommonView({
         template: JST.other,
         subviews: {
-          '#userstats': userStatsView,
+          "#userstats": userStatsView,
         },
       });
 
-      var menu = App.make_menu(['home', 'other'], 'other');
+      var menu = App.make_menu({
+        home: "/home", 
+        other: "/other"
+      }, "other");
 
       App.render_layout(otherView, menu);
 
@@ -82,7 +88,10 @@ App.MainRouter = Backbone.Router.extend({
       template: JST.verified,
     });
 
-    var menu = App.make_menu(['home', 'other']);
+    var menu = App.make_menu({
+      home: "/home", 
+      other: "/other"
+    });
 
     App.render_layout(verifiedView, menu);
 
@@ -93,7 +102,7 @@ App.MainRouter = Backbone.Router.extend({
   // here
 
   notFoundHandler: function(path) {
-    window.location.replace('/backlift/error/404'+path);
+    window.location.replace("/backlift/error/404/"+path);
   },
 
 });
