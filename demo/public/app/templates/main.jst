@@ -5,36 +5,34 @@
   </div>
 
   <div class="block">
-    <p>Welcome to backlift, the fastest way to deploy backbone.js based websites. This sample app is also an interactive tutorial. It will show you how to build a very simple backbone.js app, and highlight some of the features of a backlift that makes this process easy.</p>
+    <p>Welcome to backlift, the fastest way to deploy backbone.js based websites. This demo app is also an interactive tutorial. It will show you how to build a very simple backbone.js app, and highlight some of the features of a backlift that makes this process easy.</p>
   </div>
 
   <div class="block">
 
     <h2>The basics</h2>
     <img class="pull-right inline-img" src="/public/app/images/layout.png">
-    <p>At a minimum your backlift app has three files, a main javascript file, a javascript template (JST) file and a CSS file:</p>
+    <p>At the root of your project is a public folder. This contains all the publicly accessible files that make up your webapp. At a minimum, a typical backlift app will have a javascript file, a javascript template and a CSS file:</p>
     <ul>
-      <li><strong><a href="/public/app/scripts/main.js">app/scripts/main.js:</a></strong>
-      This file contains the brains of your website. At a minimum it contains a router that maps URLs to Views. It can also contain you data Models and Collections, and Views that display the data. In this example main.js contains just one view that renders the main template described below. </li>
+      <li><strong><a href="/public/app/scripts/main.js">public/app/scripts/main.js:</a></strong>
+      This file contains your Backbone.js code. It should contain a Router that maps URLs to Views, data Models and Collections, and Views that display the data. In this demo webapp, main.js contains just one view that renders the main template. </li>
 
-      <li><strong><a href="/public/app/templates/main.jst">app/templates/main.jst:</a></strong>
+      <li><strong><a href="/public/app/templates/main.jst">public/app/templates/main.jst:</a></strong>
       JST stands for JavaScript Template. Templates are combined with data from your model and "rendered" into HTML. Larger sites may have several templates, one for each chunk of data that will be displayed. Also JST files can be rendered heirarchically, allowing one JST to act as a layout for the rest of the website.</li>
 
-      <li><strong><a href="/public/app/styles/styles.css">app/styles/styles.css:</a></strong> controls how your website looks</li>
+      <li><strong><a href="/public/app/styles/styles.css">public/app/styles/styles.css:</a></strong> controls how your website looks</li>
     </ul>
 
     <p>There are a few additional project files:</p>
 
     <ul>
 
-      <li><strong>the /libraries folder:</strong> This is where third party libraries, such as bootstrap.css and backbone.js go.</li>
+      <li><strong>the public/libraries folder:</strong> This is where third party libraries, such as bootstrap.css and backbone.js go.</li>
 
-      <li><strong>the .backlift file:</strong> This is the configuration file that determines how your project is packaged. By default all JST files are compiled and made available as attributes of the javascript window.JST variable. For more options, take a look at the comments in the file.
+      <li><strong>the config.yml file:</strong> This is the configuration file that determines how your project is packaged and deployed. For example, it specifies what order resources should be linked into the website's generated index.html file. (By default all scripts and stylesheets from the public folder are included. JST files are compiled and made available as javascript functions on the global window.JST variable. For more options, take a look at the comments in the file.)
     </ul>
 
-    <p>After your files are uploaded using <code>backlift push</code> they will be publicly accessible at <code>&lt;your app  id&gt;.backliftapp.com/public/&lt;file path&gt;</code>. (see the links above for an example) This avoids conflicts between your public files, and paths that you might set up using your backbone router.</p>
-
-    <p>You may have noticed that there's no <strong>index.html</strong> file. If no index.html file exists in the project, backlift will create one automatically that includes links to the scripts, styles, templates and other files in your app.</p>
+    <p>After your files are uploaded using <code>backlift push</code> they will be publicly accessible at <code>&lt;your app  id&gt;.backliftapp.com/public/&lt;file path&gt;</code>. (see the links above for an example) You may have noticed that there's no <strong>index.html</strong> file in this demo project. If no index.html file exists in the project, backlift will create one automatically that includes links to the scripts, styles, templates and other files in your app.</p>
 
   </div>
 
@@ -43,7 +41,7 @@
     <h2>The admin page</h2>
     <p>Each app gets a unique admin page that can be used for debugging and, in the future, managing security features like validation and authorization. You can check out your admin page at:</p>
     <p><a href="https://www.backlift.com/admin#<%= app_id %>">https://www.backlift.com/admin#<%= app_id %></a></p>
-    <p>You'll notice that it's pretty empty right now. There's just a list of files. As you develop your app, this page will change to reflect your apps collections and request history. This makes it a valuable debugging tool.</p>
+    <p>You'll notice that it's pretty empty right now. There's just a list of files. As you develop your app, this page will change to reflect your app's collections and request history. This makes it a valuable debugging tool.</p>
     <p>The example below will add collections and history entries to the admin page.</p>
   </div>
 
@@ -54,14 +52,14 @@
 
   <ol>
     <li>
-      <p>First let's open the project folder using a text editor. We use sublime text, but any text editor will do.</p>
+      <p>First open the project folder using a text editor.</p>
     </li><li>
       <p>Next go to the Terminal and change directory into your project folder and run the <code>backlift watch</code> command:</p>
       <p><pre class="terminal">cd &lt;your app folder&gt;
 backlift watch</pre></p>
       <p>This command will track changes in your app folder, and automatically sync those changes with backlift.</p>
     </li><li>
-      <p>Now open up the <a href="/public/app/scripts/main.js">app/scripts/main.js</a> file and find the following section:</p>
+      <p>Now open up the <a href="/public/app/scripts/main.js">public/app/scripts/main.js</a> file and find the following section:</p>
       <p><pre class="terminal">// // UNCOMMENT ME TO ENABLE DINOSAUR TRACKS!
 // var tracksview = new window.TracksView();
 // $('#tracks-container').html(tracksview.render().el);</pre></p>
@@ -69,8 +67,8 @@ backlift watch</pre></p>
       <p>By adding this code into your main view, you are taking advantage of two additional files included in this app:</p>
       <p>
         <ul>
-          <li><strong><a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></strong> This file contains a backbone model, collection and view for adding and rendering dinosaur tracks.</li>
-          <li><strong><a href="/public/app/templates/tracks.jst">app/templates/tracks.jst:</a></strong> A small JavaScript Template that renders out the collection of footprints passed to it via the <code>collections</code> attribute.
+          <li><strong><a href="/public/app/scripts/tracks.js">public/app/scripts/tracks.js:</a></strong> This file contains a backbone model, collection and view for adding and rendering dinosaur tracks.</li>
+          <li><strong><a href="/public/app/templates/tracks.jst">public/app/templates/tracks.jst:</a></strong> A small JavaScript Template that renders out the collection of footprints passed to it via the <code>collections</code> attribute.
         </ul>
       </p>
     </li><li>
@@ -87,7 +85,7 @@ backlift watch</pre></p>
 
   <h3>Asynchronous updates</h3>
 
-  <p>Note that when you click in the box above, new footprints are added immediately. That's because the data is being sent to the server asynchronously. Take a look at the <code>addFootprint</code> method in <a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
+  <p>Note that when you click in the box above, new footprints are added immediately. That's because the data is being sent to the server asynchronously. Take a look at the <code>addFootprint</code> method in <a href="/public/app/scripts/tracks.js">public/app/scripts/tracks.js:</a></p>
   <p><pre class="terminal"> addFootprint: function(ev) {
 
     ...
@@ -96,11 +94,11 @@ backlift watch</pre></p>
   },</pre></p>
   <p>The backbone.js <code>create</code> method imediately adds the new object to the local <code>Tracks</code> collection and then sends a copy of the object to the server. The result is that the user interface changes imediately, while the data is sent to the server "in the background."</p>
 
-  <p>You can see the asynchronous requests going to the server by refreshing your webapp's admin page. (<a href="https://www.backlift.com/admin#<%= app_id %>">https://www.backlift.com/admin#<%= app_id %></a>) The history section includes the last 25 requests sent to the server, including the POST commands that are sent by the <code>create</code> method above. This is particularly helpful for debugging your app.</p>
+  <p>You can see the asynchronous requests going to the server by refreshing your webapp's admin page. (<a href="https://www.backlift.com/admin#<%= app_id %>">https://www.backlift.com/admin#<%= app_id %></a>) The history section includes the last 25 requests sent to the server, including the POST commands that are sent by the <code>create</code> method above.</p>
 
   <h3>API Discovery</h3>
 
-  <p>At the top of the admin page you can also see the tracks collection with the <code>xpos</code>, <code>ypos</code>, and <code>foot</code> attributes that we sent in the code above. How did backlift know about the tracks collection? We never created an API. Take another look at the tracks collection in <a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
+  <p>At the top of the admin page you can also see the tracks collection with the <code>xpos</code>, <code>ypos</code>, and <code>foot</code> attributes that we sent in the code above. How did backlift know about the tracks collection? Take another look at the tracks collection in <a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
   <p><pre class="terminal">var Tracks = Backbone.Collection.extend({
   url: '/backliftapp/tracks',
 });</pre></p>
@@ -113,13 +111,13 @@ backlift watch</pre></p>
       <li><strong>DELETE /backliftapp/&lt;collection&gt;/&lt;item_id&gt;</strong>: will delete an item.</li>
     </ul>
   </p>
-  <p>Backlift stores the data as JSON documents. That means you don't need to spend time defining the schema in advance. Backlift will happily persist any object with any set of attributes and make it available for retreival. Later when you want to deploy your app in a production environment, you can setup validation via the .backlift config file or the admin panel. (coming soon!)</p>
+  <p>Backlift stores the data as JSON documents. That means you don't need to spend time defining the schema in advance. Backlift will happily persist any object with any set of attributes and make it available for retreival. Later when you want to deploy your app in a production environment, you can setup validation via the config.yml file or the admin panel. (coming soon!)</p>
   </div>
 
   <div class="block">
   <h2>Next steps</h2>
-  <p>Backlift is adding new features constantly. Please keep an eye on <a href="http://backlift.com">backlift.com</a> for new examples and documentation.</p>
-  <p>You can download examples and starter templates directly with the <code>backlift create</code> command. Just type:</p>
+  <p>Check out the backlift documentation at <a href="http://backlift.github.com/docs/">backlift.github.com/docs</a>.</p>
+  <p>You can download more examples and starter templates directly with the <code>backlift create</code> command. Just type:</p>
   <p><pre class="terminal">backlift create:&lt;template name&gt; newapp </pre></p>
   <p>You can find a list of available templates on github at <a href="http://github.com/backlift/backlift-templates">github.com/backlift/backlift-templates</a>.</p>
   <p>We'd love to add your example or starter template to the backlift command line utility. Just submit a pull request to the github project above. We'll evaluate it and, if we approve, we'll make it available directly by typing <code>backlift create:&lt;your app here&gt;</code> !</p>

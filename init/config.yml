@@ -7,9 +7,9 @@ _app_id: {{ app_id }} # do not change
 # compressed. 
 
 # scripts:
-# - scripts/lib/jquery-min.js
-# - scripts/lib/underscore.js
-# - scripts/lib/backbone.js
+# - public/scripts/lib/jquery.js
+# - public/scripts/lib/underscore.js
+# - public/scripts/lib/backbone.js
 
 
 # add_remaining_scripts: (Yes or No) If Yes, all .js files in 
@@ -30,8 +30,7 @@ add_remaining_scripts: No
 # in order before any other .css files, similar to scripts.
 
 # styles:
-# - styles/bootstrap.css
-# - styles/bootstrap-responsive.css
+# - public/styles/bootstrap.css
 
 
 # add_remaining_styles: (Yes or No) If Yes, all remaining 
