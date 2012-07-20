@@ -4,6 +4,9 @@
 //  the MIT license. You may obtain a copy of the license at 
 //    http://www.opensource.org/licenses/mit-license.php
 
-App.UserModel = Backbone.Model.extend({
-  urlRoot: '/backliftapp/users',
-});
+
+// window.App: the global App object. After this line, you can
+// attach new objects to the App name space like so:
+// App.MyAppObject = {}
+
+window.App = {}

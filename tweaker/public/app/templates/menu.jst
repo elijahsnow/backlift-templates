@@ -1,0 +1,9 @@
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <% _.each(options, function(link, name) { %>
+      <li <%= name == current ? "class='active'" : "" %> >
+        <a href="<%= link %>" id="nav-<%= name %>"><%= name %></a>
+      </li>
+    <% }); %>
+  </ul>
+</div>

@@ -4,6 +4,43 @@
 //  the MIT license. You may obtain a copy of the license at 
 //    http://www.opensource.org/licenses/mit-license.php
 
+
+// render_layout(contentView, menuView):
+// renders the contentView into the main page layout template
+// and optionally renders a menu into the titlebar. It
+// wont render the whole page unless it needs to.
+
+var render_layout = function(contentView, menuView) {
+
+  if (!App.layoutView) {
+
+    // the top titlebar, may contain a menu
+    App.titlebarView = new App.CommonView({
+      template: JST.titlebar,
+      subviews: {
+        "#menu": menuView,
+      }
+    }); 
+
+    // the main layout view where all content goes
+    App.layoutView = new App.CommonView({
+      template: JST.layout, 
+      subviews: {
+        "#titlebar": App.titlebarView,
+        "#content": contentView,
+      },
+    });
+
+    $('body').append(App.layoutView.render().el);      
+
+  } else {
+    App.layoutView.renderSubview("#content", contentView);
+    App.titlebarView.renderSubview("#menu", menuView);
+  }
+
+};
+
+
 App.MainRouter = Backbone.Router.extend({
 
   routes: {
@@ -25,7 +62,7 @@ App.MainRouter = Backbone.Router.extend({
       template: JST.landing, 
     });
 
-    App.render_layout(landingView);
+    render_layout(landingView);
 
   },
 
@@ -34,20 +71,20 @@ App.MainRouter = Backbone.Router.extend({
 
   homePage: function () {
 
-    App.with_user( function (user) {
+    Backlift.with_user( function (user) {
 
       var homeView = new App.CommonView({
         template: JST.home,
       });
 
-      var menu = App.make_menu({
-        home: "/home", 
-        other: "/other"
-      }, "home");
+      var menu = App.make_menu( JST.menu, { 
+        options: { home: "/home", other: "/other" }, 
+        current: 'home'
+      }, this);
 
-      App.render_layout(homeView, menu);
+      render_layout(homeView, menu);
 
-    });
+    }, App.createUser);
   },
 
 
@@ -55,7 +92,7 @@ App.MainRouter = Backbone.Router.extend({
   
   otherPage: function () {
 
-    App.with_user( function (user) {
+    Backlift.with_user( function (user) {
   
       var userStatsView = new App.UserStatsView({
         model: user,
@@ -68,14 +105,14 @@ App.MainRouter = Backbone.Router.extend({
         },
       });
 
-      var menu = App.make_menu({
-        home: "/home", 
-        other: "/other"
-      }, "other");
+      var menu = App.make_menu( JST.menu, { 
+        options: { home: "/home", other: "/other" }, 
+        current: 'other'
+      }, this);
 
-      App.render_layout(otherView, menu);
+      render_layout(otherView, menu);
 
-    });
+    }, App.createUser);
   },
 
 
@@ -88,12 +125,12 @@ App.MainRouter = Backbone.Router.extend({
       template: JST.verified,
     });
 
-    var menu = App.make_menu({
-      home: "/home", 
-      other: "/other"
-    });
+    var menu = App.make_menu( JST.menu, { 
+      options: { home: "/home", other: "/other" }, 
+      current: ''
+    }, this);
 
-    App.render_layout(verifiedView, menu);
+    render_layout(verifiedView, menu);
 
   },
 

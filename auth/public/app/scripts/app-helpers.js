@@ -6,130 +6,8 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-// with_user: should be called when handling any route
-// that needs access to user data. Creates the App.user
-// object, attaches a login view to the $('body')
-// element, and fetches the user. Calls do_function
-// once the user is fetched.
-// 
-// required: App.UserModel should be defined in a 
-// separate script, and should provide a urlRoot.
-// For example:
-//
-//   App.UserModel = Backbone.Model.extend({
-//     urlRoot: '/backliftapp/users',
-//   });
-
-App.with_user = function (do_function) {
-
-  // TODO: This function expects too much from the dev. 
-  // In order to be useful the developer must be able to
-  // customize the user setup code below. Instead there 
-  // should be some kind of app-wide configuration. For 
-  // example an AppContext class with an api that looks 
-  // like this:
-  //
-  // var myapp = new App.AppContext({
-  //   userModel: App.UserModel,
-  //   userDefaults: {},
-  //   loginView: Backlift.LoginRegisterView
-  // });
-  //
-  // Then you can call methods like this:
-  //
-  // myapp.with_user(function() {
-  //   myapp.render_layout(myView);
-  // });
-
-  if (!App.user) {
-
-    // create user
-    App.user = new App.UserModel({
-      // TODO: put default user attributes here
-    });
-
-    // login if needed, and fetch the user model
-    var loginView = new Backlift.LoginRegisterView({
-      model: App.user,
-      success: do_function,
-    });
-    loginView.fetchUserModel();
-
-  } else {
-    do_function(App.user);
-  }
-};
-
-
-// render_layout(contentView, menuView):
-// renders the contentView into the main page layout template
-// and optionally renders a menu into the titlebar. It
-// wont render the whole page unless it needs to.
-
-App.render_layout = function(contentView, menuView) {
-
-  if (!App.layoutView) {
-
-    // the top titlebar, may contain a menu
-    App.titlebarView = new App.CommonView({
-      template: JST.titlebar,
-      subviews: {
-        "#menu": menuView,
-      }
-    }); 
-
-    // the main layout view where all content goes
-    App.layoutView = new App.CommonView({
-      template: JST.layout, 
-      subviews: {
-        "#titlebar": App.titlebarView,
-        "#content": contentView,
-      },
-    });
-
-    $("body").append(App.layoutView.render().el);      
-
-  } else {
-    App.layoutView.renderSubview("#content", contentView);
-    App.titlebarView.renderSubview("#menu", menuView);
-  }
-};
-
-
-// make_menu: convenience function for creating a 
-// menu view. The options parameter is an object
-// with option names as keys and links as values.
-// The current parameter is the current selected
-// option, if given. Example:
-//
-//   App.make_menu({
-//     home: "/", 
-//     other: "/other"
-//   }, 'home');
-
-App.make_menu = function(options, current) {
-  return new App.CommonView({
-    template: JST.menu,
-    params: {
-      options: options,
-      current: current,
-    },
-    events: {
-      "click [id^='nav-']": function (ev) {
-        var link = $(ev.target).attr("href");
-        App.mainRouter.navigate(link, {trigger: true});
-        return false;
-      }
-    }
-  });
-};
-
-
 // App.CommonView : a convenience View class that facilitates
-// heirarchical layouts using templates. Renders the given template
-// with the given parameters along with the view's model or 
-// collection and the current username. Then attaches the given 
-// subviews according to jquery selectors.
+// heirarchical layouts using templates. 
 
 var commonViewOptions = ["template", "params", "subviews", "render_on", "events"];
 
@@ -214,7 +92,9 @@ App.CommonView = Backbone.View.extend({
     var params = _.clone(this.params);
 
     // add common context
-    params.username = $.cookie("user");
+    if (typeof $.cookie !== 'undefined') {
+      params.username = $.cookie("user");      
+    }
     if (this.model) params.model = this.model;
     if (this.collection) params.collection = this.collection;
 
@@ -289,3 +169,30 @@ App.CommonView = Backbone.View.extend({
   debug: false,
 
 });
+
+
+// make_menu: creates a Backbone View that will render 
+// the given template with the given params. Adds a 
+// click event handler that will intercept any clicks 
+// on links whithin the view and navigate to it's href 
+// using the given router. Example:
+//
+//   App.make_menu( JST.menu, { 
+//     options: { home: "/", other: "/other" }, 
+//     current: 'home'
+//   }, App.mainRouter);
+
+App.make_menu = function(template, params, router) {
+  return new App.CommonView({
+    template: template,
+    params: params,
+    events: {
+      "click a": function (ev) {
+        var link = $(ev.target).attr("href");
+        router.navigate(link, {trigger: true});
+        return false;
+      }
+    }
+  });
+  
+};
