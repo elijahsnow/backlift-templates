@@ -44,7 +44,7 @@ App.TweakCountView = Backbone.View.extend({
 
   render: function() {
     var total = this.collection.reduce(function (memo, item) {
-      if (item.get('_owner') == $.cookie('user'))
+      if (item.get('_owner') == $.cookie('userid'))
         return memo + 1;
       else
         return memo; 

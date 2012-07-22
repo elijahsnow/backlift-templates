@@ -12,7 +12,7 @@ App.Followers = Backbone.Collection.extend({
   // that follow the currently logged in user.
   followers: function() {
     var result = !this.models ? [] : this.models.map(function (item) {
-      return _.indexOf(item.get('following'), $.cookie('user')) >= 0 
+      return _.indexOf(item.get('following'), $.cookie('username')) >= 0 
              ? item.id : null;
     });
     return _.filter(result, function (item) { return item !== null; });

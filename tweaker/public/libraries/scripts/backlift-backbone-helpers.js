@@ -235,14 +235,14 @@
     // the current model. If user not logged in, prompt them to log-in.
 
     fetchUserModel: function() {
-      if (!$.cookie('user')) {
+      if (!$.cookie('userid')) {
         this._show();
       } else {
         // creates a url by appending the current user id to the 
         // userModel's url. Assumes userModel's id is not set, and
         // the url attribute will return a baseURL 
         var url = _.isFunction(this.model.url) ? this.model.url() : this.model.url;
-        url += '/'+$.cookie('user');
+        url += '/'+$.cookie('userid');
 
         var that = this;
         var got_user_fn = function() { that.success(that.model); }
