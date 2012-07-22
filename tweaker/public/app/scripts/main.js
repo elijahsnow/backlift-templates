@@ -114,7 +114,7 @@ App.MainRouter = Backbone.Router.extend({
 
     // redirect if user logged in
 
-    if ($.cookie("user")) {
+    if ($.cookie("userid")) {
       return this.homePage();
     }
 

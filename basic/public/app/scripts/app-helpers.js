@@ -93,7 +93,8 @@ App.CommonView = Backbone.View.extend({
 
     // add common context
     if (typeof $.cookie !== 'undefined') {
-      params.username = $.cookie("user");      
+      params.userid = $.cookie("userid");
+      params.username = $.cookie("username");
     }
     if (this.model) params.model = this.model;
     if (this.collection) params.collection = this.collection;
