@@ -78,7 +78,10 @@ App.AddTweakView = App.CommonView.extend({
     Backlift.cleanupFormErrors(this);
 
     // Create a new Tweak. 
-    var newTweak = new Backbone.Model({message: this.$('#new-tweak').val()});
+    var newTweak = new Backbone.Model({
+      message: this.$('#new-tweak').val(),
+      by: $.cookie('username'),
+    });
     this.collection.add(newTweak);
     newTweak.save();
     return false;

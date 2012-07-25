@@ -144,7 +144,7 @@ App.MainRouter = Backbone.Router.extend({
       var tweakListView = new App.TweakListView({
         collection: App.tweaks,
         template: JST.tweaks,
-        params: { filter: function () { return [ user.id ]; } },
+        params: { filter: function () { return [ user.get("name") ]; } },
         render_on: "reset sync remove",
       });
 
@@ -155,7 +155,7 @@ App.MainRouter = Backbone.Router.extend({
 
       render_user_layout(user, tweakListView, subnavbar);
 
-    }, App.create_user);
+    }, App.create_user, this);
   },
 
 
@@ -177,7 +177,7 @@ App.MainRouter = Backbone.Router.extend({
 
       render_user_layout(user, tweakListView, subnavbar);
 
-    }, App.create_user);
+    }, App.create_user, this);
   },
 
 
@@ -196,7 +196,7 @@ App.MainRouter = Backbone.Router.extend({
 
       render_user_layout(user, followersView, subnavbar);
 
-    }, App.create_user);
+    }, App.create_user, this);
   },
 
 
@@ -213,7 +213,7 @@ App.MainRouter = Backbone.Router.extend({
 
       render_user_layout(user, followingView, subnavbar);
 
-    }, App.create_user);
+    }, App.create_user, this);
   },
 
 

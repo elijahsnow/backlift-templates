@@ -109,18 +109,35 @@
 
   // Backlift.LoginView:
   // A Backbone view that pops-up a modal dialog box. 
-  // Requires twitter bootstrap. Should be initialized
+  // Requires twitter bootstrap. Can be initialized
   // with its model set to a Backbone Model object that
   // will be used to store and retrieve user data.
-  // Can also be passed a success function that will be
-  // called when the user model has been fetched.
+  // Otherwise should be initialized with a create_user
+  // function that returns a Backbone Model object.
+  // Can also be passed a success function that takes 
+  // one argument, the user object, that will be
+  // called when the user has been fetched.
   //
-  // Example:
+  // After initialization, call fetchUserModel().
+  //
+  //
+  // Examples:
   //
   //   var loginView = new Backlift.LoginView({
   //     model: App.user,
-  //     success: do_success,
+  //     success: function (user) { ... },
   //   });  
+  //   loginView fetchUserModel();
+  //
+  // -- or --
+  //
+  //   var loginView = new Backlift.LoginView({
+  //     create_user: function() {
+  //       return new App.UserModel();
+  //     },
+  //     success: function (user) { ... },
+  //   });  
+  //   loginView fetchUserModel();
 
   Backlift.LoginView = Backbone.View.extend({
 
@@ -152,6 +169,7 @@
 
     initialize: function(options) {
       this.success = options.success;
+      this.create_user = options.create_user;
       $('body').append(this.render().el);
     },
 
@@ -238,6 +256,9 @@
       if (!$.cookie('userid')) {
         this._show();
       } else {
+        if (typeof this.create_user === 'function') {
+          this.model = this.create_user.call();
+        }
         // creates a url by appending the current user id to the 
         // userModel's url. Assumes userModel's id is not set, and
         // the url attribute will return a baseURL 
@@ -245,15 +266,14 @@
         url += '/'+$.cookie('userid');
 
         var that = this;
-        var got_user_fn = function() { that.success(that.model); }
         this.model.fetch({
           url: url,
           error: function (model, xhr) {
             if (xhr.status == 404) {
-              model.save(null, {success: got_user_fn});
+              model.save(null, {success: that.success});
             }
           },
-          success: got_user_fn,
+          success: that.success,
         });
       }
     },
@@ -367,35 +387,46 @@
   //   the user data has been fetched. Should accept
   //   one argument, the user object.
   //
+  //   context: the value that 'this' will be assigned
+  //   when the above two functions are called. default
+  //   is unassigned.
+  //
   // Example:
   //
   //   var my_create_user_fn = function() {
-  //     return new Backbone.Model.extend({
+  //     var UserModel = Backbone.Model.extend({
   //       urlRoot: 'backliftapp/users'
-  //     })
+  //     });
+  //     return new UserModel();
   //   }
   //
   //   Backlift.with_user( function (user) {
   //     // create and render user views here
   //   }, my_create_user_fn);
 
-  Backlift.with_user = function (do_function, create_user) {
+  Backlift.with_user = function (do_function, create_user, context) {
 
     if (!Backlift._current_user) {
 
-      Backlift._current_user = create_user();
+      var call_do_function = function(user) {
+        Backlift._current_user = user;
+        do_function.call(context, user);
+      }
+
+      var call_create_user = function() {
+        return create_user.call(context);
+      }
 
       // login if needed, and fetch the user model
       var loginView = new Backlift.LoginRegisterView({
-        model: Backlift._current_user,
-        success: do_function,
+        create_user: call_create_user,
+        success: call_do_function,
       });
       loginView.fetchUserModel();
 
     } else {
-      do_function(Backlift._current_user);
+      do_function.call(context, Backlift._current_user);
     }
   };
 
 }).call(this);
-

@@ -13,6 +13,7 @@ App.create_user = function() {
 
   var user = new App.UserModel({
     following: [],
+    name: $.cookie('username'),
   });
 
   App.followers = new App.Followers();

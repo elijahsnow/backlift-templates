@@ -13,7 +13,7 @@ App.Followers = Backbone.Collection.extend({
   followers: function() {
     var result = !this.models ? [] : this.models.map(function (item) {
       return _.indexOf(item.get('following'), $.cookie('username')) >= 0 
-             ? item.id : null;
+             ? item.get('name') : null;
     });
     return _.filter(result, function (item) { return item !== null; });
   },
@@ -37,6 +37,7 @@ App.NumFollowersView = Backbone.View.extend({
   },
 
 });
+
 
 App.NumFollowingView = Backbone.View.extend({
 

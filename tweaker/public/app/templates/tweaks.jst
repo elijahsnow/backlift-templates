@@ -1,20 +1,20 @@
 <ul class="tweaker-list">
-  <%  var dstr = 'MMMM d, yyyy hh:mm:ss'; 
+  <%  var dstr = "MMMM d, yyyy hh:mm:ss"; 
     for (var i=collection.length-1; i>=0; i--) {
       item = collection.models[i];
-      if (!filter || _.indexOf(filter, item.get('_owner')) >= 0) { %>
-        <li class='tweaker-item' id='tweak-<%= item.cid %>'>
-          <div class='pull-right tweaker-meta'>
+      if (!filter || _.indexOf(filter, item.get('by')) >= 0) { %>
+        <li class="tweaker-item" id="tweak-<%= item.cid %>">
+          <div class="pull-right tweaker-meta">
             <% if (!filter || filter[0] != username ) { %> 
-              <span class="tweak-by"><%= item.get('_owner') %></span>
+              <span class="tweak-by"><%= item.get("by") %></span>
             <% } else { %> 
-              <a class='del'>X</a>
+              <a class="del">X</a>
             <% } %>
             <br>
-            <span class="tweak-created"><%= new Date(item.get('_created')).toString(dstr) %> </span>
+            <span class="tweak-created"><%= new Date(item.get("_created")).toString(dstr) %> </span>
           </div>
-          <div class='tweak-message'>
-            <h1><%= item.get('message') %> &nbsp;</h1>
+          <div class="tweak-message">
+            <h1><%= item.get("message") %> &nbsp;</h1>
           </div>
         </li>
   <%  }
