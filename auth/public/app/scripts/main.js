@@ -84,7 +84,7 @@ App.MainRouter = Backbone.Router.extend({
 
       render_layout(homeView, menu);
 
-    }, App.createUser);
+    }, App.createUser, this);
   },
 
 
@@ -112,7 +112,7 @@ App.MainRouter = Backbone.Router.extend({
 
       render_layout(otherView, menu);
 
-    }, App.createUser);
+    }, App.createUser, this);
   },
 
 
