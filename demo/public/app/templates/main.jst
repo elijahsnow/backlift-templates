@@ -12,7 +12,7 @@
 
     <h2>The basics</h2>
     <img class="pull-right inline-img" src="/public/app/images/layout.png">
-    <p>At the root of your project is a public folder. This contains all the publicly accessible files that make up your webapp. At a minimum, a typical backlift app will have a javascript file, a javascript template and a CSS file:</p>
+    <p>The <code>backlift create:&lt;template&gt; &lt;app name&gt;</code> command generates a new project folder and fills it with files from the template you specified. At the root of your project folder is a public folder. This contains all the publicly accessible files that make up your webapp. At a minimum, a typical backlift app will have a javascript file, a javascript template and a CSS file:</p>
     <ul>
       <li><strong><a href="/public/app/scripts/main.js">public/app/scripts/main.js:</a></strong>
       This file contains your Backbone.js code. It should contain a Router that maps URLs to Views, data Models and Collections, and Views that display the data. In this demo webapp, main.js contains just one view that renders the main template. </li>
@@ -117,9 +117,12 @@ backlift watch</pre></p>
   <div class="block">
   <h2>Next steps</h2>
   <p>Check out the backlift documentation at <a href="http://backlift.github.com/docs/">backlift.github.com/docs</a>.</p>
-  <p>You can download more examples and starter templates directly with the <code>backlift create</code> command. Just type:</p>
-  <p><pre class="terminal">backlift create:&lt;template name&gt; newapp </pre></p>
-  <p>You can find a list of available templates on github at <a href="http://github.com/backlift/backlift-templates">github.com/backlift/backlift-templates</a>.</p>
+  <p>You can download more examples and starter templates directly with the <code>backlift create</code> command. For example, try these commands:</p>
+  <p><pre class="terminal">backlift create basicapp   # creates a blank backbone app styled with Twitter Bootstrap
+backlift create:auth authapp   # creates a blank app with user login/registration
+backlift create:tweaker tweakerapp   # demonstrates a more complex app: a Twitter-like social messaging app</pre></p>
+  <p>You can find a list of available templates on github at <a href="http://github.com/backlift/backlift-templates">github.com/backlift/backlift-templates</a>. Any of the templates can be downloaded using the command:</p>
+  <p><pre class="terminal">backlift create:&lt;template name&gt; &lt;app name&gt; </pre></p>
   <p>We'd love to add your example or starter template to the backlift command line utility. Just submit a pull request to the github project above. We'll evaluate it and, if we approve, we'll make it available directly by typing <code>backlift create:&lt;your app here&gt;</code> !</p>
   <p>Happy hacking!</p>
   </div>
