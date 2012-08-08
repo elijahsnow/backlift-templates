@@ -6,15 +6,21 @@
 
 App.Followers = Backbone.Collection.extend({
 
-  url: '/backliftapp/users',
+  url: "/backliftapp/profiles",
+
+  initialize: function(models, options) {
+    if (options.user) {
+      this.user = options.user;
+    }
+  },
 
   // followers() returns the list of users
   // that follow the currently logged in user.
   followers: function() {
-    var result = !this.models ? [] : this.models.map(function (item) {
-      return _.indexOf(item.get('following'), $.cookie('username')) >= 0 
-             ? item.get('name') : null;
-    });
+    var result = (!this.models) ? [] : this.models.map(function (item) {
+      return _.indexOf(item.get("following"), this.user.get("username")) >= 0 
+             ? item.get("username") : null;
+    }, this);
     return _.filter(result, function (item) { return item !== null; });
   },
 
@@ -26,7 +32,7 @@ App.NumFollowersView = Backbone.View.extend({
   tagName: "span",
 
   initialize: function() {
-    this.collection.on('reset', this.render, this);
+    this.collection.on("reset", this.render, this);
   },
 
   // render: just renders the number of the current
@@ -46,11 +52,11 @@ App.NumFollowingView = Backbone.View.extend({
   initialize: function() {
     // change is triggered when a new user is fetched
     // sync is triggered when new user data is saved
-    this.model.on('change sync', this.render, this);
+    this.model.on('change:id sync', this.render, this);
   },
 
   render: function() {
-    this.$el.html(this.model.get('following').length.toString());
+    this.$el.html(this.model.get('profile').following.length.toString());
     return this;
   },
 
@@ -61,12 +67,22 @@ App.FollowingView = Backbone.View.extend({
 
   initialize: function(options, userModel) {
     this.userModel = userModel;
-    this.userModel.on('change sync', this.render, this);
+  },
+
+  _following: function() {
+    return this.userModel.get("profile").following;
+  },
+
+  _saveFollowing: function(following) {
+    var profile = this.userModel.get("profile");
+    profile.following = following;
+    this.userModel.save({profile: profile});
+    this.render();
   },
 
   _renderUsers: function (users, addfollowers) {
     this.$el.html(JST.followers({
-      filter: this.userModel.get('following'),
+      filter: this._following(),
       users: users,
       addfollowers: addfollowers,
     }));
@@ -74,7 +90,7 @@ App.FollowingView = Backbone.View.extend({
   },
 
   render: function() {
-    return this._renderUsers(this.userModel.get('following'), true);
+    return this._renderUsers(this._following(), true);
   },
 
   events: {
@@ -104,18 +120,18 @@ App.FollowingView = Backbone.View.extend({
   },
 
   _add_follower: function(userid) {
-      var following = this.userModel.get('following');
+      var following = this._following();
       if (_.indexOf(following, userid) == -1)
         following.push(userid);
-      this.userModel.save({'following': following});
+      this._saveFollowing(following);
   },
 
   _del_follower: function(userid) {
-      var following = this.userModel.get('following');
+      var following = this._following();
       following = _.filter(following, function (item) {
         return item !== userid;
       });
-      this.userModel.save({'following': following});
+      this._saveFollowing(following);
   },
 });
 
@@ -124,7 +140,7 @@ App.FollowersView = App.FollowingView.extend({
 
   initialize: function(options, userModel) {
     this.userModel = userModel;
-    this.userModel.on('sync', this.render, this);
+    this.userModel.on('change:id', this.render, this);
     this.collection.on('reset', this.render, this);
   },
 

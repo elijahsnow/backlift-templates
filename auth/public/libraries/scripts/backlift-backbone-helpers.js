@@ -10,6 +10,7 @@
   // Backlift namespace boilerplate.
   // Initialization and namespacing technique taken from Backbone.js.
   // See source of backbone at http://documentcloud.github.com/backbone
+  // Makes it possible to use Backlift from node, but I haven't tried it.
 
   if (typeof Backlift === 'undefined') {
     var root = this;
@@ -54,8 +55,8 @@
   //     match '#my_message .errors' and '#my_form_errors'
   // 
   // Backlift.handleFormErrors should be called in response to an 'error' 
-  // event. For example, in a Backbone view's initialization, you could use 
-  // the following statement:
+  // event. For example, in a Backbone view's initialization, you could use the 
+  // following statement:
   // 
   //   this.model.on('error', function(model, response, params) {
   //     Backlift.handleFormErrors(this, response);
@@ -108,36 +109,32 @@
 
 
   // Backlift.LoginView:
-  // A Backbone view that pops-up a modal dialog box. 
-  // Requires twitter bootstrap. Can be initialized
-  // with its model set to a Backbone Model object that
-  // will be used to store and retrieve user data.
-  // Otherwise should be initialized with a create_user
-  // function that returns a Backbone Model object.
-  // Can also be passed a success function that takes 
-  // one argument, the user object, that will be
-  // called when the user has been fetched.
+  // A Backbone view that pops-up a modal dialog box. Requires twitter 
+  // bootstrap. The constructor takes one parameter, a create_user function:
+  // 
+  //   create_user: a function that takes one parameter, the user data received 
+  //   from the server. The data should be used to create a backbone model 
+  //   instance. 
   //
-  // After initialization, call fetchUserModel().
+  // After initialization, call fetchUser().
   //
+  // Note: The user model's url attribute should be set to 
+  // '/backlift/auth/currentuser'. That way you can store custom user data on 
+  // the backlift server just by calling save(your_data) on the fetched user 
+  // model.
   //
-  // Examples:
+  // Example:
   //
-  //   var loginView = new Backlift.LoginView({
-  //     model: App.user,
-  //     success: function (user) { ... },
-  //   });  
-  //   loginView fetchUserModel();
+  //   App.UserModel = Backbone.Model.extend({
+  //     url: '/backlift/auth/currentuser'
+  //   });
   //
-  // -- or --
+  //   var makeUser = function(data) {
+  //     App.user = App.UserModel(data);
+  //   };
   //
-  //   var loginView = new Backlift.LoginView({
-  //     create_user: function() {
-  //       return new App.UserModel();
-  //     },
-  //     success: function (user) { ... },
-  //   });  
-  //   loginView fetchUserModel();
+  //   var loginView = new Backlift.LoginView(makeUser);
+  //   loginView.fetchUser();
 
   Backlift.LoginView = Backbone.View.extend({
 
@@ -167,9 +164,8 @@
     + "  </div>"
     + "</div>",
 
-    initialize: function(options) {
-      this.success = options.success;
-      this.create_user = options.create_user;
+    initialize: function(create_user) {
+      this.create_user = create_user;
       $('body').append(this.render().el);
     },
 
@@ -178,25 +174,25 @@
       return this;
     },
 
-    events: {
-      "click #forgot-link" : "_forgot_clicked",
-      "click #forgot-submit" : "_forgot_submitted",
-      "click #login-submit" : "_login_submitted",
-    },
-
     _make_success_fn: function () {
       var that=this;
-      return function () {
-        that.fetchUserModel();
+      return function (data, textStatus, jqXHR) {
         that._hide();
+        that.create_user.call(undefined, data, jqXHR);
       }
     },
 
     _make_error_fn: function (prefix) {
       var that=this;
-      return function(xhr) {
-        Backlift.handleFormErrors(that, xhr, prefix);
+      return function(jqXHR, textStatus, errorThrown) {
+        Backlift.handleFormErrors(that, jqXHR, prefix);
       }
+    },
+
+    events: {
+      "click #forgot-link" : "_forgot_clicked",
+      "click #forgot-submit" : "_forgot_submitted",
+      "click #login-submit" : "_login_submitted",
     },
 
     _forgot_submitted: function () {
@@ -248,33 +244,16 @@
       $('#login_modal').modal('hide');
     },
 
-    // fetchUserModel: If user logged in fetch the user's model, or if no user
-    // model exists on the server for the currently logged in user, save
-    // the current model. If user not logged in, prompt them to log-in.
-
-    fetchUserModel: function() {
-      if (!$.cookie('userid')) {
-        this._show();
-      } else {
-        if (typeof this.create_user === 'function') {
-          this.model = this.create_user.call();
-        }
-        // creates a url by appending the current user id to the 
-        // userModel's url. Assumes userModel's id is not set, and
-        // the url attribute will return a baseURL 
-        var url = _.isFunction(this.model.url) ? this.model.url() : this.model.url;
-        url += '/'+$.cookie('userid');
-
-        var that = this;
-        this.model.fetch({
-          url: url,
-          error: function (model, xhr) {
-            if (xhr.status == 404) {
-              model.save(null, {success: that.success});
-            }
-          },
-          success: that.success,
+    fetchUser: function() {
+      if ($.cookie('sid')) {
+        $.ajax({
+          type: 'GET',
+          url: '/backlift/auth/currentuser',
+          success: this._make_success_fn(),
+          error: this._show,
         });
+      } else {
+        this._show();
       }
     },
 
@@ -373,59 +352,68 @@
   });
 
 
-  // with_user: convenience function for handling routes
-  // that need access to user data. Creates a user, 
-  // shows a login form, and fetches the user data. 
-  // Calls do_function once the user data is fetched.
+  // Backlift.with_user: 
+  // A convenience function for handling routes that need access to user data. 
+  // Creates a user, shows a login form, and fetches the user model. Calls 
+  // do_function once the user model is fetched.
   // 
   // parameters: 
-  //   create_user: a function that should return an 
-  //   instance of Backbone.Model. It will be used to
-  //   fetch user data.
+  //   do_function: a function that will be called once the user data has been 
+  //   fetched. Should accept one argument, the user model.
   //
-  //   do_function: a function that will be called once
-  //   the user data has been fetched. Should accept
-  //   one argument, the user object.
+  //   create_user (optional): a function that takes two arguments. The first 
+  //   will be the user data received from the server that should be used to 
+  //   create a backbone model instance. The second is a function that takes 
+  //   one argument, the user object, that must be called once the user object 
+  //   has been created.
   //
-  //   context: the value that 'this' will be assigned
-  //   when the above two functions are called. default
-  //   is unassigned.
+  // Note: The user model's url attribute should be set to 
+  // '/backlift/auth/currentuser'. That way you can store custom user data on 
+  // the backlift server just by calling save(your_data) on the fetched user 
+  // model.
   //
-  // Example:
+  // Examples: (the following are equivalent)
   //
-  //   var my_create_user_fn = function() {
-  //     var UserModel = Backbone.Model.extend({
-  //       urlRoot: 'backliftapp/users'
-  //     });
-  //     return new UserModel();
+  //   Backlift.with_user( function (user) {
+  //     // create and render user views here
+  //   });
+  //  
+  // -- or --
+  //
+  //   var create_user = function(data, finished) {
+  //     var user = new Backbone.Model(data);
+  //     user.url = '/backlift/auth/currentuser';
+  //     finished(user);
   //   }
   //
   //   Backlift.with_user( function (user) {
   //     // create and render user views here
-  //   }, my_create_user_fn);
+  //   }, create_user);
 
-  Backlift.with_user = function (do_function, create_user, context) {
+  Backlift.with_user = function (do_function, create_user) {
 
-    if (!Backlift._current_user) {
+    if (!Backlift.current_user) {
 
-      var call_do_function = function(user) {
-        Backlift._current_user = user;
-        do_function.call(context, user);
+      var _finished_fn = function(user) {
+        Backlift.current_user = user;
+        do_function(user);
       }
 
-      var call_create_user = function() {
-        return create_user.call(context);
+      var _create_user_fn = function(data) {
+        if (create_user) {
+          create_user(data, _finished_fn);
+        } else {
+          new_user = new Backbone.Model(data);
+          new_user.url = '/backlift/auth/currentuser';
+          _finished_fn(new_user);
+        }
       }
 
-      // login if needed, and fetch the user model
-      var loginView = new Backlift.LoginRegisterView({
-        create_user: call_create_user,
-        success: call_do_function,
-      });
-      loginView.fetchUserModel();
+      var loginView = new Backlift.LoginRegisterView(_create_user_fn);
+      loginView.fetchUser();
 
     } else {
-      do_function.call(context, Backlift._current_user);
+      do_function(Backlift.current_user);
     }
   };
 

@@ -5,18 +5,9 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-App.createUser = function () {  
-  var UserModel = Backbone.Model.extend({
-    urlRoot: "/backliftapp/users",
-  });
-
-  return new UserModel();
-};
-
-
 App.UserStatsView = Backbone.View.extend({
   initialize: function () {
-    this.model.on("change", this.render, this);
+    this.model.on("change:id", this.render, this);
   },
 
   render: function () {

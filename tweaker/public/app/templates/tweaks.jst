@@ -11,7 +11,13 @@
               <a class="del">X</a>
             <% } %>
             <br>
-            <span class="tweak-created"><%= new Date(item.get("_created")).toString(dstr) %> </span>
+            <span class="tweak-created">
+              <% if (item.get("_created")) { %>
+                <%= new Date(item.get("_created")).toString(dstr) %> 
+              <% } else { %>
+                Just now
+              <% } %>
+            </span>
           </div>
           <div class="tweak-message">
             <h1><%= item.get("message") %> &nbsp;</h1>

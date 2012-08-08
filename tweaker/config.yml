@@ -46,8 +46,8 @@ add_remaining_styles: yes
 
 
 collections:
-  users:
+  profiles:
     _public_permissions: { default: 'r', readonly: yes }
-    _id: { type: 'auto:current_user', readonly: yes }
+    following: { type: 'list', default: [] }
   tweaks:
     message: { type: 'string', max: 25, required: yes }

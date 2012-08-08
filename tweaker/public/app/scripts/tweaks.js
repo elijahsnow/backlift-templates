@@ -34,17 +34,12 @@ App.TweakCountView = Backbone.View.extend({
   tagName: "span",
 
   initialize: function() {
-    // Rather than listening for the add event, we listen for the 
-    // sync event which will be triggered after the server responds
-    // to a save() with the 'real' (server-generated) tweak object.
-    // This way we catch attributes set by the server such as 
-    // the _owner attribute which we need to render this view.
-    this.collection.on('sync reset remove', this.render, this);
+    this.collection.on('reset add remove', this.render, this);
   },
 
   render: function() {
     var total = this.collection.reduce(function (memo, item) {
-      if (item.get('_owner') == $.cookie('userid'))
+      if (item.get("by") == Backlift.current_user.get("username"))
         return memo + 1;
       else
         return memo; 
@@ -65,25 +60,27 @@ App.AddTweakView = App.CommonView.extend({
     App.CommonView.prototype.initialize.call(this, options);
 
     // show errors generated when attempting to create new tweaks
-    this.collection.on('error', function(status, response) {
+    this.collection.on('error', function(model, response) {
+      model.collection.remove(model);
       Backlift.handleFormErrors(this, response);
     }, this);
   },
 
   events: {
-    'click #add-tweak': 'addTweak',
+    "click #add-tweak": "addTweak",
   },
 
   addTweak: function(e) {
-    Backlift.cleanupFormErrors(this);
-
     // Create a new Tweak. 
     var newTweak = new Backbone.Model({
-      message: this.$('#new-tweak').val(),
-      by: $.cookie('username'),
+      message: this.$("#new-tweak").val(),
+      by: Backlift.current_user.get("username"),
     });
-    this.collection.add(newTweak);
-    newTweak.save();
+    this.collection.create(newTweak);
+
+    Backlift.cleanupFormErrors(this);
+    this.$("#new-tweak").val('');
+
     return false;
   },
 

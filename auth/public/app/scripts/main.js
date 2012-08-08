@@ -71,6 +71,8 @@ App.MainRouter = Backbone.Router.extend({
 
   homePage: function () {
 
+    var router = this;
+
     Backlift.with_user( function (user) {
 
       var homeView = new App.CommonView({
@@ -80,17 +82,19 @@ App.MainRouter = Backbone.Router.extend({
       var menu = App.make_menu( JST.menu, { 
         options: { home: "/home", other: "/other" }, 
         current: 'home'
-      }, this);
+      }, router);
 
       render_layout(homeView, menu);
 
-    }, App.createUser, this);
+    });
   },
 
 
   // otherHandler: another user page
   
   otherPage: function () {
+
+    var router = this;
 
     Backlift.with_user( function (user) {
   
@@ -108,11 +112,11 @@ App.MainRouter = Backbone.Router.extend({
       var menu = App.make_menu( JST.menu, { 
         options: { home: "/home", other: "/other" }, 
         current: 'other'
-      }, this);
+      }, router);
 
       render_layout(otherView, menu);
 
-    }, App.createUser, this);
+    });
   },
 
 

@@ -114,7 +114,7 @@ App.MainRouter = Backbone.Router.extend({
 
     // redirect if user logged in
 
-    if ($.cookie("userid")) {
+    if ($.cookie("sid")) {
       return this.homePage();
     }
 
@@ -139,49 +139,55 @@ App.MainRouter = Backbone.Router.extend({
 
   homePage: function () {
 
+    var router = this;
+
     Backlift.with_user( function (user) {
   
       var tweakListView = new App.TweakListView({
         collection: App.tweaks,
         template: JST.tweaks,
-        params: { filter: function () { return [ user.get("name") ]; } },
-        render_on: "reset sync remove",
+        params: { filter: function () { return [ user.get("username") ]; } },
+        render_on: "reset add remove",
       });
 
       var subnavbar = App.make_menu(JST.menu, {
         options: user_menu_options, 
         current: "tweaks"
-      }, this);
+      }, router);
 
       render_user_layout(user, tweakListView, subnavbar);
 
-    }, App.create_user, this);
+    }, App.create_user);
   },
 
 
   streamPage: function () {
+
+    var router = this;
 
     Backlift.with_user( function (user) {
 
       var tweakListView = new App.TweakListView({
         collection: App.tweaks,
         template: JST.tweaks,
-        params: { filter: function() { return user.get("following"); } },
-        render_on: "reset sync remove",
+        params: { filter: function() { return user.get("profile").following; } },
+        render_on: "reset",
       });
 
       var subnavbar = App.make_menu(JST.menu, {
         options: user_menu_options, 
         current: "stream"
-      }, this);
+      }, router);
 
       render_user_layout(user, tweakListView, subnavbar);
 
-    }, App.create_user, this);
+    }, App.create_user);
   },
 
 
   followersPage: function () {
+
+    var router = this;
 
     Backlift.with_user( function (user) {
 
@@ -192,15 +198,17 @@ App.MainRouter = Backbone.Router.extend({
       var subnavbar = App.make_menu(JST.menu, {
         options: user_menu_options, 
         current: "followers"
-      }, this);
+      }, router);
 
       render_user_layout(user, followersView, subnavbar);
 
-    }, App.create_user, this);
+    }, App.create_user);
   },
 
 
   followingPage: function () {
+
+    var router = this;
 
     Backlift.with_user( function (user) {
 
@@ -209,11 +217,11 @@ App.MainRouter = Backbone.Router.extend({
       var subnavbar = App.make_menu(JST.menu, {
         options: user_menu_options, 
         current: "following"
-      }, this);
+      }, router);
 
       render_user_layout(user, followingView, subnavbar);
 
-    }, App.create_user, this);
+    }, App.create_user);
   },
 
 
