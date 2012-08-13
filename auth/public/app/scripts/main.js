@@ -56,8 +56,6 @@ App.MainRouter = Backbone.Router.extend({
 
   landingPage: function () {
 
-    App.user = null;
-
     var landingView = new App.CommonView({
       template: JST.landing, 
     });
