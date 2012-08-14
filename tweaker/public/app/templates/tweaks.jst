@@ -5,10 +5,10 @@
       if (!filter || _.indexOf(filter, item.get('by')) >= 0) { %>
         <li class="tweaker-item" id="tweak-<%= item.cid %>">
           <div class="pull-right tweaker-meta">
-            <% if (!filter || filter[0] != username ) { %> 
-              <span class="tweak-by"><%= item.get("by") %></span>
-            <% } else { %> 
+            <% if (filter && filter[0] == username ) { %> 
               <a class="del">X</a>
+            <% } else { %> 
+              <span class="tweak-by"><%= item.get("by") %></span>
             <% } %>
             <br>
             <span class="tweak-created">

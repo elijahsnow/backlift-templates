@@ -5,12 +5,14 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-// render_layout(contentView, menuView):
+// render_layout(user, contentView, menuView):
 // renders the contentView into the main page layout template
 // and optionally renders a menu into the titlebar. It
 // wont render the whole page unless it needs to.
 
-var render_layout = function(contentView, menuView) {
+var render_layout = function(user, contentView, menuView) {
+
+  var username = user ? user.get("username") : "";
 
   if (!App.layoutView) {
 
@@ -19,7 +21,10 @@ var render_layout = function(contentView, menuView) {
       template: JST.titlebar,
       subviews: {
         "#menu": menuView,
-      }
+      },
+      params: {
+        username: username,
+      },
     }); 
 
     // the main layout view where all content goes
@@ -34,8 +39,9 @@ var render_layout = function(contentView, menuView) {
     $('body').append(App.layoutView.render().el);      
 
   } else {
-    App.layoutView.renderSubview("#content", contentView);
+    App.titlebarView.params.username = username;
     App.titlebarView.renderSubview("#menu", menuView);
+    App.layoutView.renderSubview("#content", contentView);
   }
 
 };
@@ -79,7 +85,7 @@ var render_user_layout = function(user, contentView, subnavbarView) {
       },
     });
 
-    render_layout(App.userView);
+    render_layout(user, App.userView);
 
   } else {
     App.userView.renderSubview('#usercontent', contentView);
@@ -114,7 +120,7 @@ App.MainRouter = Backbone.Router.extend({
 
     // redirect if user logged in
 
-    if ($.cookie("sid")) {
+    if ($.cookie("backlift_user")) {
       return this.homePage();
     }
 
@@ -123,7 +129,7 @@ App.MainRouter = Backbone.Router.extend({
     var tweakListView = new App.TweakListView({
       collection: App.tweaks,
       template: JST.tweaks,
-      params: { filter: null },
+      params: { filter: null, username: null },
       render_on: "reset",
     });
 
@@ -133,7 +139,7 @@ App.MainRouter = Backbone.Router.extend({
       subviews: { "#tweaks": tweakListView, }
     });
 
-    render_layout(landingView);
+    render_layout(null, landingView);
   },
 
 
@@ -142,11 +148,16 @@ App.MainRouter = Backbone.Router.extend({
     var router = this;
 
     Backlift.with_user( function (user) {
+
+      var username = user.get("username");
   
       var tweakListView = new App.TweakListView({
         collection: App.tweaks,
         template: JST.tweaks,
-        params: { filter: function () { return [ user.get("username") ]; } },
+        params: { 
+          filter: function () { return [ username ]; },
+          username: username,
+        },
         render_on: "reset add remove",
       });
 
@@ -170,7 +181,10 @@ App.MainRouter = Backbone.Router.extend({
       var tweakListView = new App.TweakListView({
         collection: App.tweaks,
         template: JST.tweaks,
-        params: { filter: function() { return user.get("profile").following; } },
+        params: { 
+          filter: function() { return user.get("profile").following; },
+          username: user.get("username"),
+        },
         render_on: "reset",
       });
 
@@ -234,7 +248,7 @@ App.MainRouter = Backbone.Router.extend({
       template: JST.verified,
     });
 
-    render_layout(verifiedView);
+    render_layout(null, verifiedView);
 
   },
   

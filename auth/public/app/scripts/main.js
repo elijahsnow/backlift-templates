@@ -5,12 +5,14 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-// render_layout(contentView, menuView):
+// render_layout(user, contentView, menuView):
 // renders the contentView into the main page layout template
 // and optionally renders a menu into the titlebar. It
 // wont render the whole page unless it needs to.
 
-var render_layout = function(contentView, menuView) {
+var render_layout = function(user, contentView, menuView) {
+
+  var username = user ? user.get("username") : "";
 
   if (!App.layoutView) {
 
@@ -19,7 +21,10 @@ var render_layout = function(contentView, menuView) {
       template: JST.titlebar,
       subviews: {
         "#menu": menuView,
-      }
+      },
+      params: {
+        username: username,
+      },
     }); 
 
     // the main layout view where all content goes
@@ -31,11 +36,12 @@ var render_layout = function(contentView, menuView) {
       },
     });
 
-    $('body').append(App.layoutView.render().el);      
+    $("body").append(App.layoutView.render().el);      
 
   } else {
-    App.layoutView.renderSubview("#content", contentView);
+    App.titlebarView.params.username = username;
     App.titlebarView.renderSubview("#menu", menuView);
+    App.layoutView.renderSubview("#content", contentView);
   }
 
 };
@@ -60,7 +66,7 @@ App.MainRouter = Backbone.Router.extend({
       template: JST.landing, 
     });
 
-    render_layout(landingView);
+    render_layout(null, landingView);
 
   },
 
@@ -75,14 +81,17 @@ App.MainRouter = Backbone.Router.extend({
 
       var homeView = new App.CommonView({
         template: JST.home,
+        params: {
+          username: user.get("username"),
+        }
       });
 
       var menu = App.make_menu( JST.menu, { 
         options: { home: "/home", other: "/other" }, 
-        current: 'home'
+        current: "home",
       }, router);
 
-      render_layout(homeView, menu);
+      render_layout(user, homeView, menu);
 
     });
   },
@@ -109,10 +118,10 @@ App.MainRouter = Backbone.Router.extend({
 
       var menu = App.make_menu( JST.menu, { 
         options: { home: "/home", other: "/other" }, 
-        current: 'other'
+        current: "other",
       }, router);
 
-      render_layout(otherView, menu);
+      render_layout(user, otherView, menu);
 
     });
   },
@@ -129,10 +138,10 @@ App.MainRouter = Backbone.Router.extend({
 
     var menu = App.make_menu( JST.menu, { 
       options: { home: "/home", other: "/other" }, 
-      current: ''
+      current: "",
     }, this);
 
-    render_layout(verifiedView, menu);
+    render_layout(null, verifiedView, menu);
 
   },
 
