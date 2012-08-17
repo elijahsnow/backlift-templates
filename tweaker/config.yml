@@ -14,6 +14,7 @@ scripts:
 - public/libraries/scripts/bootstrap-2.0.4.js
 - public/libraries/scripts/date-1.0.js
 - public/libraries/scripts/backlift-backbone-helpers.js
+- public/libraries/scripts/backlift-pusher-helpers.js
 - public/setup.js
 - public/app/scripts/app-helpers.js
 

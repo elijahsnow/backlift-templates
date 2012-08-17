@@ -7,19 +7,10 @@
 
 (function(){
 
-  // Backlift namespace boilerplate.
-  // Initialization and namespacing technique taken from Backbone.js.
-  // See source of backbone at http://documentcloud.github.com/backbone
-  // Makes it possible to use Backlift from node, but I haven't tried it.
-
+  // Backlift namespace
+  var Backlift = this.Backlift;
   if (typeof Backlift === 'undefined') {
-    var root = this;
-    var Backlift;
-    if (typeof exports !== 'undefined') {
-      Backlift = exports;
-    } else {
-      Backlift = root.Backlift = {};
-    }
+    Backlift = this.Backlift = {};
   }
 
 
