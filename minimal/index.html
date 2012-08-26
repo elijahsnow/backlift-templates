@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html><head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="//documentcloud.github.com/underscore/underscore.js"></script>
-    <script src="//backbonejs.org/backbone.js"></script>
-    <script src="/public/my.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="//documentcloud.github.com/underscore/underscore.js"></script>
+  <script src="//backbonejs.org/backbone.js"></script>
+  <script src="/public/my.js"></script>
 </head>
 <body>
-	<div id="mainview">
-		<input id="add-input" type="text" />
-		<button id="add-btn">Add thing</button>
-		<ul></ul>
-	</div>
+  <div id="mainview">
+    <input id="add-input" type="text" />
+    <button id="add-btn">Add thing</button>
+    <ul></ul>
+  </div>
 
-	<!-- templates -->
+  <!-- templates -->
 
-    <script type="text/template" id="mainview-template">
-		<% thinglist.each(function(athing) { %>
-		  <li>
-		  	<%= athing.get('name') %>
-		  	<button class='thing-del-btn' id='del-<%= athing.cid %>'>delete</button>
-		  </li>
-		<% }) %>
-    </script>
+  <script type="text/template" id="mainview-template">
+    <% thinglist.each(function(athing) { %>
+      <li>
+      <%= athing.get('name') %>
+      <button class='thing-del-btn' id='del-<%= athing.cid %>'>delete</button>
+      </li>
+    <% }) %>
+  </script>
 
 </body>
 </html>
