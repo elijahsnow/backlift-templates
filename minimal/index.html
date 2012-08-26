@@ -6,13 +6,16 @@
   <script src="/public/my.js"></script>
 </head>
 <body>
+
+  <!-- a placeholder for my list of things, with an input for adding new things -->
+
   <div id="mainview">
     <input id="add-input" type="text" />
     <button id="add-btn">Add thing</button>
     <ul></ul>
   </div>
 
-  <!-- templates -->
+  <!-- the thing list template -->
 
   <script type="text/template" id="mainview-template">
     <% thinglist.each(function(athing) { %>
