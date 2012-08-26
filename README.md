@@ -15,7 +15,7 @@ This project contains a set of templates that can be used to create new backlift
 
 **demo**: A simple single page app with a tutorial that shows off some of the basics of backlift and backbone.js development.
 
-**list**: A minimal project that persists data to backlift. Only three files. A demonstration of how simple a backlift project can be.
+**minimal**: A minimal project that persists data to backlift. Only two files. A demonstration of how simple a backlift project can be.
 
 **todo**: The classic todo example, running on backlift.
 
