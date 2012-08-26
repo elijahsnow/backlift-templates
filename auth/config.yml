@@ -1,5 +1,3 @@
-_app_id: {{ app_id }} # do not change
-
 
 # scripts: These javascript files will be packaged and linked
 # in order before any other .js files. File paths should be 
