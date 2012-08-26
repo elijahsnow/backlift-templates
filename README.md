@@ -1,6 +1,6 @@
 # backlift-templates #
 
-This project contains a set of templates that can be used to create new backlift apps. (see backlift.com) Templates can be downloaded using the backlift command line utility by using the create command:
+This project contains a set of templates that can be used to create new backlift apps. (see [backlift.com](http://backlift.com)) Templates can be downloaded using the backlift command line utility by using the create command:
 
 	backlift create:<template name> <app name>
 
