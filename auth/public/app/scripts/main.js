@@ -5,49 +5,17 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-// render_layout(user, contentView, menuView):
-// renders the contentView into the main page layout template
-// and optionally renders a menu into the titlebar. It
-// wont render the whole page unless it needs to.
-
-var render_layout = function(user, contentView, menuView) {
-
-  var username = user ? user.get("username") : "";
-
-  if (!App.layoutView) {
-
-    // the top titlebar, may contain a menu
-    App.titlebarView = new App.CommonView({
-      template: JST.titlebar,
-      subviews: {
-        "#menu": menuView,
-      },
-      params: {
-        username: username,
-      },
-    }); 
-
-    // the main layout view where all content goes
-    App.layoutView = new App.CommonView({
-      template: JST.layout, 
-      subviews: {
-        "#titlebar": App.titlebarView,
-        "#content": contentView,
-      },
-    });
-
-    $("body").append(App.layoutView.render().el);      
-
-  } else {
-    App.titlebarView.params.username = username;
-    App.titlebarView.renderSubview("#menu", menuView);
-    App.layoutView.renderSubview("#content", contentView);
-  }
-
-};
-
-
 App.MainRouter = Backbone.Router.extend({
+
+  // Menu options that will be displayed in the titlebar
+
+  menuOptions: [
+    {name: "home", link: "/home"},
+    {name: "other", link: "/other"},
+  ],
+
+
+  // routes: URL patterns mapped to handler functions
 
   routes: {
     "": "landingPage",
@@ -63,35 +31,30 @@ App.MainRouter = Backbone.Router.extend({
   landingPage: function () {
 
     var landingView = new App.CommonView({
-      template: JST.landing, 
+      template: Handlebars.templates.landing, 
     });
 
-    render_layout(null, landingView);
+    this.render_layout(null, landingView, null);
 
   },
 
-
+  
   // homeHandler: the user's home page
 
   homePage: function () {
 
-    var router = this;
+    var self = this;
 
     Backlift.with_user( function (user) {
 
       var homeView = new App.CommonView({
-        template: JST.home,
+        template: Handlebars.templates.home,
         params: {
           username: user.get("username"),
         }
       });
 
-      var menu = App.make_menu( JST.menu, { 
-        options: { home: "/home", other: "/other" }, 
-        current: "home",
-      }, router);
-
-      render_layout(user, homeView, menu);
+      self.render_layout(user, homeView, "home");
 
     });
   },
@@ -101,7 +64,7 @@ App.MainRouter = Backbone.Router.extend({
   
   otherPage: function () {
 
-    var router = this;
+    var self = this;
 
     Backlift.with_user( function (user) {
   
@@ -110,39 +73,15 @@ App.MainRouter = Backbone.Router.extend({
       });
 
       var otherView = new App.CommonView({
-        template: JST.other,
+        template: Handlebars.templates.other,
         subviews: {
           "#userstats": userStatsView,
         },
       });
 
-      var menu = App.make_menu( JST.menu, { 
-        options: { home: "/home", other: "/other" }, 
-        current: "other",
-      }, router);
-
-      render_layout(user, otherView, menu);
+      self.render_layout(user, otherView, "other");
 
     });
-  },
-
-
-  // verifiedHandler: the page users see after they
-  // verify their email address
-
-  verifiedHandler: function() {
-
-    var verifiedView = new App.CommonView({
-      template: JST.verified,
-    });
-
-    var menu = App.make_menu( JST.menu, { 
-      options: { home: "/home", other: "/other" }, 
-      current: "",
-    }, this);
-
-    render_layout(null, verifiedView, menu);
-
   },
 
 
@@ -152,6 +91,56 @@ App.MainRouter = Backbone.Router.extend({
   notFoundHandler: function(path) {
     window.location.replace("/backlift/error/404/"+path);
   },
+
+
+  // render_layout(contentView, currentPage):
+  // renders the contentView into the main layout template
+  // and renders a menu into the titlebar. It only renders 
+  // the layout template the first time.
+
+  render_layout: function(user, contentView, currentPage) {
+
+    var username = user ? user.get("username") : "";
+
+    if (!this.menuView) {
+
+      // the menu that will be rendered into the titlebar
+      this.menuView = App.makeMenu(
+        Handlebars.templates.menu, 
+        this.menuOptions, 
+        this
+      );
+      this.menuView.setCurrent(currentPage);
+
+      // the top titlebar, may contain a menu
+      this.titlebarView = new App.CommonView({
+        template: Handlebars.templates.titlebar,
+        subviews: {
+          "#menu": this.menuView
+        },
+        params: {
+          username: username
+        }
+      }); 
+
+      // the main layout view where all content goes
+      this.layoutView = new App.CommonView({
+        template: Handlebars.templates.layout, 
+        subviews: {
+          "#titlebar": this.titlebarView,
+          "#content": contentView
+        }
+      });
+
+      $('body').append(this.layoutView.render().el);      
+
+    } else {
+      this.menuView.setCurrent(currentPage);
+      this.menuView.render();
+      this.layoutView.renderSubview("#content", contentView);
+    }
+
+  }
 
 });
 

@@ -1,7 +1,0 @@
-<ul class="nav">
-<% _.each(options, function(link, name) { %>
-  <li <%= name == current ? "class='active'" : "" %> >
-    <a href="<%= link %>" id="nav-<%= name %>"><%= name %></a>
-  </li>
-<% }); %>
-</ul>

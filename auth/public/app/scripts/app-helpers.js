@@ -9,8 +9,6 @@
 // App.CommonView : a convenience View class that facilitates
 // heirarchical layouts using templates. 
 
-var commonViewOptions = ["template", "params", "subviews", "render_on", "events"];
-
 App.CommonView = Backbone.View.extend({
 
   // initialize(options):
@@ -64,10 +62,10 @@ App.CommonView = Backbone.View.extend({
     options.params = options.params || {};
     options.subviews = options.subviews || {};
 
-    // borrowed from Backbone.js view._configure()
-    for (var i = 0; i < commonViewOptions.length; i++) {
-      var attr = commonViewOptions[i];
-      if (options[attr]) this[attr] = options[attr];
+    for (var attr in options) {
+      if (options.hasOwnProperty(attr)) {
+        this[attr] = options[attr];
+      }
     }
 
     if (this.render_on) {
@@ -77,6 +75,13 @@ App.CommonView = Backbone.View.extend({
         this.collection.on(this.render_on, this.render, this);
     }
   },
+
+  // templateMethod: The method used to compile 
+  // templates. You can override this here or set 
+  // the templateMethod option when initializing
+  // CommonView
+
+  templateMethod: _.template,
 
   // render(): renders the view's template with 
   // the given parameters and then attaches the 
@@ -105,8 +110,11 @@ App.CommonView = Backbone.View.extend({
     // render template
     if (typeof this.template === "function") {
       this.$el.html(this.template(params));
+    } else if (typeof this.template === "string" &&
+               typeof this.params !== "undefined") {
+      this.$el.html(this.templateMethod(this.template, params));
     } else {
-      this.$el.html(_.template(this.template, params));
+      this.$el.html(this.template);
     }
 
     // render subviews
@@ -163,31 +171,44 @@ App.CommonView = Backbone.View.extend({
     this.subviews[selector].delegateEvents();
   },
 
-  debug: false,
+  // debug: when true, logs rendering of each subview
+
+  debug: false
 
 });
 
 
-// make_menu: creates a Backbone View that will render 
-// the given template with the given params. Adds a 
-// click event handler that will intercept any clicks 
-// on links whithin the view and navigate to it's href 
-// using the given router. Example:
+// makeMenu: creates a Backbone View that will render 
+// the given template with the given menu items passed
+// to the template as an items array. Each item should
+// include a name, link and optional current property. 
+// Adds a click event handler that will intercept any 
+// clicks on links whithin the view and navigate to 
+// its href using the given router. You can set the 
+// current menu option on the returned view by calling
+// setCurrent(name). Example:
 //
-//   App.make_menu( JST.menu, { 
-//     options: { home: "/", other: "/other" }, 
-//     current: 'home'
-//   }, App.mainRouter);
+//   var menuView = App.makeMenu( aTemplate, [
+//     {name: "home", link: "/", current: true},
+//     {name: "other", link: "/other"},
+//   ], App.mainRouter);
+//   menuView.setCurrent("other");
 
-App.make_menu = function(template, params, router) {
+App.makeMenu = function(template, items, router) {
   return new App.CommonView({
     template: template,
-    params: params,
+    params: {items: items},
     events: {
       "click a": function (ev) {
         var link = $(ev.target).attr("href");
         router.navigate(link, {trigger: true});
         return false;
+      }
+    },
+    setCurrent: function(current) {
+      for (var i=0; i<this.params.items.length; i++) {
+        var is_cur = this.params.items[i].name === current;
+        this.params.items[i].current = is_cur;
       }
     }
   });

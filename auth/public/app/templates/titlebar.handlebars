@@ -3,18 +3,18 @@
     <a class="brand" href="/" id='homelink'>
       User template
     </a>
-    <div id="menu"></div>
+    {{#if username}} <div id="menu"></div> {{/if}}
     <div class="userblock pull-right">
-      <% if (username) { %>
-          <a class="brand" href="/home"><%= username %></a>
+      {{#if username}}
+        <a class="brand" href="/home"> {{username}} </a>
         <a href="/backlift/auth/logout?_next=/">
           <button class="btn">Sign-Out</button>
         </a>
-      <% } else { %>
+      {{else}}
         <a href="/home">
           <button class="btn">Sign-In</button>
         </a>
-      <% }; %>
+      {{/if}}
     </div>
   </div>
 </div></div>

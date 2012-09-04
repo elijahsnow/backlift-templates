@@ -5,48 +5,22 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 
-// render_layout(contentView, menuView):
-// renders the contentView into the main layout template
-// and optionally renders a menu into the titlebar. It
-// only renders the layout template the first time.
-
-var render_layout = function(contentView, menuView) {
-
-  if (!App.layoutView) {
-
-    // the top titlebar, may contain a menu
-    App.titlebarView = new App.CommonView({
-      template: JST.titlebar,
-      subviews: {
-        "#menu": menuView,
-      }
-    }); 
-
-    // the main layout view where all content goes
-    App.layoutView = new App.CommonView({
-      template: JST.layout, 
-      subviews: {
-        "#titlebar": App.titlebarView,
-        "#content": contentView,
-      },
-    });
-
-    $('body').append(App.layoutView.render().el);      
-
-  } else {
-    App.layoutView.renderSubview("#content", contentView);
-    App.titlebarView.renderSubview("#menu", menuView);
-  }
-
-};
-
-
 App.MainRouter = Backbone.Router.extend({
+
+  // Menu options that will be displayed in the titlebar
+
+  menuOptions: [
+    {name: "home", link: "/"},
+    {name: "other", link: "/other"},
+  ],
+
+
+  // routes: URL patterns mapped to handler functions
 
   routes: {
     "": "homePage",
     "other": "otherPage",
-    "*path": "notFoundHandler",
+    "*path": "notFoundHandler"
   },
 
 
@@ -55,15 +29,10 @@ App.MainRouter = Backbone.Router.extend({
   homePage: function () {
 
     var homeView = new App.CommonView({
-      template: JST.home, 
+      template: Handlebars.templates.home
     });
 
-    var menu = App.make_menu( JST.menu, { 
-      options: { home: "/", other: "/other" }, 
-      current: "home"
-    }, this);
-
-    render_layout(homeView, menu);
+    this.render_layout(homeView, "home");
   },
 
 
@@ -72,15 +41,10 @@ App.MainRouter = Backbone.Router.extend({
   otherPage: function () {
 
     var otherView = new App.CommonView({
-      template: JST.other,
+      template: Handlebars.templates.other
     });
 
-    var menu = App.make_menu( JST.menu, { 
-      options: { home: "/", other: "/other" }, 
-      current: "other"
-    }, this);
-
-    render_layout(otherView, menu);
+    this.render_layout(otherView, "other");
   },
 
 
@@ -90,6 +54,51 @@ App.MainRouter = Backbone.Router.extend({
   notFoundHandler: function(path) {
     window.location.replace("/backlift/error/404/"+path);
   },
+
+
+  // render_layout(contentView, currentPage):
+  // renders the contentView into the main layout template
+  // and renders a menu into the titlebar. It only renders 
+  // the layout template the first time.
+
+  render_layout: function(contentView, currentPage) {
+
+    if (!this.menuView) {
+
+      // the menu that will be rendered into the titlebar
+      this.menuView = App.makeMenu(
+        Handlebars.templates.menu, 
+        this.menuOptions, 
+        this
+      );
+      this.menuView.setCurrent(currentPage);
+
+      // the top titlebar, may contain a menu
+      this.titlebarView = new App.CommonView({
+        template: Handlebars.templates.titlebar,
+        subviews: {
+          "#menu": this.menuView
+        }
+      }); 
+
+      // the main layout view where all content goes
+      this.layoutView = new App.CommonView({
+        template: Handlebars.templates.layout, 
+        subviews: {
+          "#titlebar": this.titlebarView,
+          "#content": contentView
+        }
+      });
+
+      $('body').append(this.layoutView.render().el);      
+
+    } else {
+      this.menuView.setCurrent(currentPage);
+      this.menuView.render();
+      this.layoutView.renderSubview("#content", contentView);
+    }
+
+  }
 
 });
 

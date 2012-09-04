@@ -11,7 +11,12 @@ App.UserStatsView = Backbone.View.extend({
   },
 
   render: function () {
-    this.$el.html(JST.userstats(this.model.toJSON()));
+    this.$el.html(Handlebars.templates.userstats(this.model.toJSON()));
     return this;
   },
+});
+
+
+Handlebars.registerHelper('date', function(date) {
+  return new Date(date).toString('MMMM d, yyyy hh:mm:ss');
 });
