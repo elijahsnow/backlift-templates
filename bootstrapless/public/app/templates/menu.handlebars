@@ -1,0 +1,7 @@
+<ul class="nav">
+  {{#each items}}
+    <li {{#if current}} class="active" {{/if}}>
+      <a href="{{link}}" id="nav-{{name}}"> {{name}} </a>
+    </li>
+  {{/each}}
+</ul>
