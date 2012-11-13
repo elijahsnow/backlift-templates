@@ -1,0 +1,52 @@
+# -------------------------------------------------------------------
+# Backlift config.yml file. This file can be used to customize how 
+# your application is packaged when you run backlift push.
+# -------------------------------------------------------------------
+
+# compile: Backlift will select an appropriate compiler for each file 
+# that matches one of the patterns below. The file types that backlift 
+# recognizes are:
+#   *.jst        -> underscore templates (outputs .js files)
+#   *.handlebars -> handlebars templates (outputs .js files)
+#   *.coffee     -> coffeescript compiler (outputs .js files)
+#   *.less       -> lessc css compiler (outputs .css files)
+#   *.scss       -> sass compiler (outputs .css files)
+#   *.sass       -> sass compiler (outputs .css files)
+#   *.haml       -> haml compiler (outputs .html files)
+
+compile:
+- /*.haml
+
+
+# scripts: These javascript files will be packaged and linked in 
+# order. File paths should be specified relative to the project root.
+# They should not be compressed. The * will match any string and **
+# will match any folder.
+
+scripts:
+- /scripts/**/*.js
+
+
+# styles: These stylesheets will be packaged and linked in order, 
+# similar to scripts.
+
+styles:
+- /styles/bootstrap-*.css
+- /styles/**/*.css
+
+
+# optimize: The optimize flag controls whether or not backlift 
+# concatenates and minifies .js and .css files. The optimizer is slow
+# and produces obfuscated code that cannot be easily debugged. For 
+# these reasons, optimization should be disabled during development
+
+optimize: no
+
+
+# autoroute: if autoroute is on, URLs that don't resolve to a valid
+# file on disk will be passed to the index.html file. This makes it 
+# possible to build a single page app that uses javascript to render
+# page content based on the url. If autoroute is off, URLs that don't
+# resolve to a valid file will return a 404 error.
+
+autoroute: no

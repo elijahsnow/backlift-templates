@@ -1,0 +1,47 @@
+!!!
+%html
+  %head
+    %title {{ title }}
+
+    {{ scripts }}
+    {{ styles }}
+
+  %body
+    #titlebar
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+
+            %a.brand(href="/" id="homelink") Static template
+
+            #menu
+              %ul.nav
+                %li 
+                  %a(href="/" id="nav-home") home
+                %li.active
+                  %a(href="/other.html" id="nav-other") other
+
+      %div(style="height: 80px") &nbsp;
+
+    #content
+      .container
+        %h1 A more sophisticated example
+        %h2 Demonstrating template variables and HAML
+
+        %p
+        %p.explanation
+          If you check out the files on your local machine, you should see a file
+          called other.haml. The file is compiled when you run "backlift push" into
+          other.html, the file you're viewing now. For a list of available build tools, 
+          check out the config.yml file.
+        %p.explanation
+          Also notice that other.haml doesn't explicitly link twitter bootstrap or style.css.
+          Instead it uses the {{{ styles }}} template variable to link 
+          all the css files discovered by backlift when you run "backlift push."
+        %p.explanation
+          Currently, the template variables available via backlift are {{{ scripts }}}, 
+          {{{ styles }}}, and {{{ title }}}.
+        %p.explanation
+          
+
+    #footer
