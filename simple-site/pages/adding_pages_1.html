@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    {{ scripts }}
+    {{ styles }}
+  </head>
+  <body>
+
+    <div id="top-nav"></div>
+
+    <div class="container">
+      <h1> Adding Pages </h1>
+
+      <div class="step">
+        <div class="row">
+          <div class="span1"><span class='bignum'>1.</span></div>
+          <div class="span8">
+            <p><b>Find this web site's files on your computer</b></p>
+            <p>They will be in your Dropbox folder under <code>Apps/Backlift/</code></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="row">
+          <div class="span1"><span class='bignum'>2.</span></div>
+          <div class="span8">
+            <p><b>Create a new .html file in the /pages folder</b></p>
+            <p>The easiest way is to copy the <code>/pages/blank_page_2.html</code> file and rename it. </p>
+            <p>The new page will automatically be detected and added to the navigation menu. All numbers and underscores will be stripped out of the filename in order to create the link text.</p>
+            <p>If you need menu items to be ordered a particular way, put a number in the filename. For example: services_1.html, contact_2.html, about_3.html.</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="step">
+        <div class="row">
+          <div class="span1"><span class='bignum'>3.</span></div>
+          <div class="span8">
+            <p><b>Make some changes!</b></p>
+            <p>Try making some changes to your new file. Your page will refresh automatically as you work.</p>
+          </div>
+        </div>
+      </div>
+      <p>Next, for a peak under the hood, check out the <code>/config.yml</code> file.</p>
+
+    </div>
+
+    {{ payload }}
+  </body>
+</html>

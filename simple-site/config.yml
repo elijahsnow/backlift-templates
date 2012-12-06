@@ -1,0 +1,105 @@
+# -------------------------------------------------------------------
+# Backlift config.yml file. These settings control various javascript
+# and css compilers, file directory listings, data prefetching, 
+# optimization, oauth keys, and other server functions
+# -------------------------------------------------------------------
+
+
+# compile: Backlift will select an appropriate compiler for each file 
+# that matches one of the patterns below. A '*' will match any string 
+# and '**' will match any folder. The compiler will be selected based 
+# on the extension of the matched file. The compiled file will be
+# placed in the same folder as the original file. The extensions that 
+# backlift recognizes are:
+#   .coffee     -> coffeescript compiler (outputs .js files)
+#   .less       -> lessc css compiler (outputs .css files)
+#   .jst        -> underscore templates (outputs .js files)
+#   .handlebars -> handlebars templates (outputs .js files)
+#
+# The following block is the default. Uncomment it to customize.
+
+# compile:
+# - /**/*.jst
+# - /**/*.handlebars
+# - /**/bootstrap*.less
+# - /**/*.coffee
+
+
+# scripts: An ordered list of javascript file patterns. Used to create 
+# a corresponding list of <script src="*"> tags. To render the result, 
+# place the {{ script }} template variable in the header of your html
+# files. A '*' will match any string and '**' will match any folder.
+
+scripts:
+- /scripts/underscore.js
+- /**/*.js
+
+
+# styles: An ordered list of stylesheet file patterns. Used to create 
+# a list of <link type="text/css" rel="stylesheet" href="*"> tags. Use 
+# the {{ styles }} template variable to render the result.
+
+styles:
+- /styles/bootstrap.css
+- /**/*.css
+
+
+# toc: The table of contents directive tells backlift to create
+# listings of all files that match the given patterns. Each entry
+# is a name, pattern pair, and generates a separate table. The results 
+# can be retreived via an AJAX call to /backlift/toc or by using 
+# the prefetch directive to render the data into your html files.
+#
+# The following is an example toc bloc: 
+#
+# toc: 
+#    pages: /pages/*.html
+#    photos: /photos/*.jpg
+
+toc:
+   pages: /pages/*.html
+
+
+# prefetch: The prefetch directive tells backlift what data to render
+# into the {{ payload }} template variable. The data is rendered as
+# JSON and assigned to the Backlift.payload global variable. Each entry 
+# of the prefetch list is a URL from the backlift API, or one of these 
+# aliases: 
+#   toc         : all tables of contents 
+#                 (equivalent to /backlift/toc)
+#   currentuser : the curent user's data 
+#                 (equivalent to /backlift/auth/currentuser)
+#   allmodels   : all models and collections stored on the server
+#
+# The default prefetch block is:
+#
+# prefetch:
+# - toc           
+# - allmodels    
+# - currentuser  
+
+prefetch:
+- toc
+
+
+# optimize: The optimize flag controls whether or not backlift 
+# concatenates and minifies .js and .css files. The optimizer is 
+# slow and produces obfuscated code that cannot be easily debugged. 
+# For these reasons, optimization should be disabled while developing.
+
+optimize: no
+
+
+# title: sets the value of the {{ title }} template paramter which
+# can be used to render this string into your html files. The value 
+# of title defaults to the app's id. 
+
+# title: My awesome website
+
+
+# autoroute: the automatic routing feature is useful for single-page 
+# websites that implement their own javascript routing. If autoroute
+# is set to 'yes', all requests to URLs that don't match a file or API 
+# endpoint will be routed to the index.html file.
+
+autoroute: no

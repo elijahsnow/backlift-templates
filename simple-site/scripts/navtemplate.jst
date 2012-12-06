@@ -1,0 +1,26 @@
+    <!--
+      // This is the template used by /scripts/nav.js to create
+      // the top navigation bar. It uses the underscore library's
+      // template syntax. See http://underscorejs.org/#template.
+    -->
+
+    <div id="titlebar">
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="/" id="homelink">
+              Simple Site
+            </a>
+            <div id="menu">
+              <ul class="nav" id="topmenu">
+                <% _.each(items, function(item) { %>
+                   <li class="<%= item.active %>">
+                     <a href="<%= item.url %>" > <%= item.name %> </a>
+                   </li> 
+                <% }); %>
+              </ul>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>

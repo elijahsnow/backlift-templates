@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Lato Italic'), local('Lato-Italic'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Lato Black'), local('Lato-Black'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/G2uphNnNqGFMHLRsO_72ngLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 900;
+  src: local('Lato Black Italic'), local('Lato-BlackItalic'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/VNUH7ZAcagYBWsAiBBCEY7O3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(http://themes.googleusercontent.com/static/fonts/lato/v6/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  color: #333;
+  padding-top: 100px;
+}
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+}
+
+h2 {
+  color: #333;
+}
+
+h3 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  margin-top: 5px;
+  color: #666;
+}
+
+p {
+  font-size: larger;
+  color: #666;  
+}
+
+.nav li { 
+  text-transform: capitalize;  
+}
+
+.hero-unit h1 {
+  font-size: 64px;
+}
+
+
+.btn-large {
+  margin-top: 12px;
+  font-size: 24px;
+}
+
+.bignum {
+  float:left;
+  margin-right: 20px;
+  font-size: 60px;
+  font-weight: bold;
+  line-height: 50px;
+  color: #666;    
+  display: inline-block;    
+  vertical-align: top;
+}
+
+.step {
+  padding-top: 20px;
+  clear: both;
+}
+
+.step + div, .step + p, .step + h1 {
+  margin-top: 20px;
+}
+
+.step + .step {
+  margin-top: 0px;
+}
+
