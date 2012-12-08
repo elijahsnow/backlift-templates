@@ -39,8 +39,7 @@
   <div class="block">
 
     <h2>The admin page</h2>
-    <p>Each app gets a unique admin page that can be used for debugging and, in the future, managing security features like validation and authorization. You can check out your admin page at:</p>
-    <p><a href="https://www.backlift.com/admin#<%= app_id %>">https://www.backlift.com/admin#<%= app_id %></a></p>
+    <p>Each app gets a unique admin page that can be used for debugging and, in the future, managing security features like validation and authorization. To see your app's admin page, return to your backlift account dashboard and visit the "Apps" page. Find the app you just created and click the small gear icon.</p>
     <p>You'll notice that it's pretty empty right now. There's just a list of files. As you develop your app, this page will change to reflect your app's collections and request history. This makes it a valuable debugging tool.</p>
     <p>The example below will add collections and history entries to the admin page.</p>
   </div>
@@ -94,7 +93,7 @@ backlift watch</pre></p>
   },</pre></p>
   <p>The backbone.js <code>create</code> method imediately adds the new object to the local <code>Tracks</code> collection and then sends a copy of the object to the server. The result is that the user interface changes imediately, while the data is sent to the server "in the background."</p>
 
-  <p>You can see the asynchronous requests going to the server by refreshing your webapp's admin page. (<a href="https://www.backlift.com/admin#<%= app_id %>">https://www.backlift.com/admin#<%= app_id %></a>) The history section includes the last 25 requests sent to the server, including the POST commands that are sent by the <code>create</code> method above.</p>
+  <p>You can see the asynchronous requests going to the server by refreshing your webapp's admin page. The history section includes the last 25 requests sent to the server, including the POST commands that are sent by the <code>create</code> method above.</p>
 
   <h3>API Discovery</h3>
 
