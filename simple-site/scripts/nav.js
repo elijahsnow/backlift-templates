@@ -61,7 +61,7 @@ window.onload = function() {
     // render the resut into the #top-nav element
 
     var navContent = JST.navtemplate({items: items});
-    document.getElementById("top-nav").innerHTML = navContent;
+    document.getElementById("top-nav").appendChild(Backlift.htmlToFragment(navContent));
 
   }
 
