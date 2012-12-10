@@ -343,12 +343,14 @@
 
   (function($){
 
+    var root = this;
+
     var htmlToFragment = this.htmlToFragment = function(html)
     {
       var retval = document.createDocumentFragment();
       var currentParent = retval;
 
-      HTMLParser(html,
+      root.HTMLParser(html,
       {
         start : function(tag, attrs, unary)
         {
@@ -402,6 +404,6 @@
       return this.safeHtml(html);
     };  
 
-  }).call(Backlift, $ || {});
+  }).call(Backlift, this.$ || {fn:{}});
 
 })();
