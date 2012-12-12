@@ -4,9 +4,9 @@
 // The payload and table of contents can be configured using
 // the config.yml file. The resulting list of pages is
 // rendered using the /scripts/navtemplate.jst template and
-// placed into the top-nav HTML element.
+// placed into the main-nav HTML element.
 
-window.onload = function() {
+$(function() {
 
   // get table of contents payload
 
@@ -58,11 +58,10 @@ window.onload = function() {
       active: isActive("/") + isActive("/index.html")
     });
 
-    // render the resut into the #top-nav element
+    // render the resut into the #main-nav element
 
     var navContent = JST.navtemplate({items: items});
-    document.getElementById("top-nav").innerHTML = navContent;
-
+    $("#main-nav").html(navContent);
   }
 
-};
+});

@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    {{ scripts }}
     {{ styles }}
   </head>
   <body>
 
-    <div id="top-nav"></div>
+    <!-- top navigation bar -->
+
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div id="main-nav"></div>
+      </div>
+    </div>
+
+    <!-- content -->
 
     <div class="container">
       <h1> Adding Pages </h1>
@@ -34,7 +42,6 @@
         </div>
       </div>
 
-
       <div class="step">
         <div class="row">
           <div class="span1"><span class='bignum'>3.</span></div>
@@ -48,6 +55,7 @@
 
     </div>
 
+    {{ scripts }}
     {{ payload }}
   </body>
 </html>

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    {{ scripts }}
     {{ styles }}
   </head>
   <body>
 
     <!-- top navigation bar -->
 
-    <div id="top-nav"></div>
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div id="main-nav"></div>
+      </div>
+    </div>
 
     <!-- content -->
 
@@ -17,7 +21,7 @@
       <div class="hero-unit">
         <div class="row">
           <div class="span4">
-            <h1> A Simple Website</h1>
+            <h1>A&nbsp;Simple Website</h1>
           </div>
           <div class="span6">
             <h3> This multi-page website is brought to you by <a href="https://www.backlift.com">Backlift</a> and <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></h3>
@@ -27,6 +31,7 @@
       </div>      
     </div>   
 
+    {{ scripts }}
     {{ payload }}
   </body>
 </html>
