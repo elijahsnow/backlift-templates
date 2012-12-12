@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- see config.yml to configure scripts and styles -->
-    {{ scripts }}
+    <!-- see config.yml to configure styles -->
     {{ styles }}
+
+    <!-- match screen width to device width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   </head>
   <body>
 
     <!-- The navbar. See nav.js and navtemplate.jst -->
-    <div id="top-nav"></div>
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div id="main-nav"></div>
+      </div>
+    </div>
 
 
     <!-- YOUR CONTENT GOES HERE -->
@@ -18,7 +25,8 @@
     </div>   
 
 
-    <!-- see config.yml to configure the payload -->
+    <!-- see config.yml to configure scripts and payload -->
+    {{ scripts }}
     {{ payload }}
   </body>
 </html>
