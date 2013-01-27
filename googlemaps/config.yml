@@ -1,0 +1,19 @@
+
+# scripts: An ordered list of javascript file patterns. Used to create 
+# a corresponding list of <script src="*"> tags. To render the result, 
+# place the {{ script }} template variable in the header of your html
+# files. A '*' will match any string and '**' will match any folder.
+
+# for googlemaps, replace the __YOUR_KEY_HERE__ with your gmaps api key
+
+scripts:
+- 'https://maps.googleapis.com/maps/api/js?key=__YOUR_KEY_HERE__&sensor=false'
+- /**/*.js
+
+
+# styles: An ordered list of stylesheet file patterns. Used to create 
+# a list of <link type="text/css" rel="stylesheet" href="*"> tags. Use 
+# the {{ styles }} template variable to render the result.
+
+styles:
+- /**/*.css
