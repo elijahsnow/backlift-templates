@@ -120,7 +120,7 @@ App.MainRouter = Backbone.Router.extend({
 
     // redirect if user logged in
 
-    if ($.cookie("backlift_user")) {
+    if ($.cookie("backlift_session")) {
       return this.homePage();
     }
 

@@ -235,7 +235,7 @@
     },
 
     fetchUser: function() {
-      if ($.cookie('backlift_user')) {
+      if ($.cookie('backlift_session')) {
         $.ajax({
           type: 'GET',
           url: '/backlift/auth/currentuser',
