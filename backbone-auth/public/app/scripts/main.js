@@ -85,6 +85,14 @@ App.MainRouter = Backbone.Router.extend({
   },
 
 
+  verifiedHandler: function() {
+    var view = new App.CommonView({
+      template: "<div class='container'><H1>Email Verified</H1><a href='/' class='btn'>home</a></div>",
+    });
+    this.render_layout(null, view, null);
+  },
+
+
   // notFoundHandler: any invalid url will be redirected
   // here
 
