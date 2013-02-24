@@ -48,3 +48,11 @@ styles:
 # these reasons, optimization should be disabled during development
 
 optimize: no
+
+
+# autoroute: the automatic routing feature is useful for single-page 
+# websites that implement their own javascript routing. If autoroute
+# is set to 'yes', all requests to URLs that don't match a file or API 
+# endpoint will be routed to the index.html file. Default is 'no'.
+
+autoroute: yes
