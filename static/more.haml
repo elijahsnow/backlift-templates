@@ -3,8 +3,8 @@
   %head
     %title {{ title }}
 
-    {{ scripts }}
-    {{ styles }}
+    {{$ scripts }}
+    {{$ styles }}
 
   %body
     #titlebar
@@ -36,11 +36,11 @@
           check out the config.yml file.
         %p.explanation
           Also notice that more.haml doesn't explicitly link twitter bootstrap or style.css.
-          Instead it uses the {{{ styles }}} template variable to link 
+          Instead it uses the {{{$ styles }}} template variable to link 
           all the css files discovered by backlift when you run "backlift push."
         %p.explanation
-          Currently, the template variables available via backlift are {{{ scripts }}}, 
-          {{{ styles }}}, and {{{ title }}}.
+          Currently, the template variables available via backlift are {{{$ scripts }}}, 
+          {{{$ styles }}}, and {{{ title }}}.
         %p.explanation
           For some fun, try running "backlift watch" and then editing more.haml on your local hard drive. This webpage will auto-refresh.
           
