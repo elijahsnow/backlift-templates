@@ -27,7 +27,7 @@
 
 # scripts: An ordered list of javascript file patterns. Used to create 
 # a corresponding list of <script src="*"> tags. To render the result, 
-# place the {{ scripts }} template variable in the header of your html
+# place the {{$ scripts }} template variable in the header of your html
 # files. A '*' will match any string and '**' will match any folder.
 
 scripts:
@@ -38,7 +38,7 @@ scripts:
 
 # styles: An ordered list of stylesheet file patterns. Used to create 
 # a list of <link type="text/css" rel="stylesheet" href="*"> tags. Use 
-# the {{ styles }} template variable to render the result.
+# the {{$ styles }} template variable to render the result.
 
 styles:
 - /styles/bootstrap.css
