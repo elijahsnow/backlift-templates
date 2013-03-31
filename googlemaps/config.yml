@@ -13,7 +13,7 @@ scripts:
 
 # styles: An ordered list of stylesheet file patterns. Used to create 
 # a list of <link type="text/css" rel="stylesheet" href="*"> tags. Use 
-# the {{ styles }} template variable to render the result.
+# the {{$ styles }} template variable to render the result.
 
 styles:
 - /**/*.css
