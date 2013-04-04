@@ -1,6 +1,10 @@
 //  backlift-pusher-helpers.js
 //  (c) 2012 Cole Krumbholz, SendSpree Inc.
 //
+//  This file does one thing: reloads your backlift app
+//  when new changes are detected. You shouldn't have to 
+//  mess with it.
+//
 //  This document may be used and distributed in accordance with 
 //  the MIT license. You may obtain a copy of the license at 
 //    http://www.opensource.org/licenses/mit-license.php
@@ -16,7 +20,7 @@
   setup_pusher.call(Backlift);
 
   // Backlift.pusherInit:
-  // create a new pusher channel with your pusher api-key
+  // create a new pusher channel 
 
   Backlift.pusherInit = function (channel, key) {
     if (typeof Backlift._pusherData === 'undefined') {
@@ -45,7 +49,142 @@
     });    
   };
 
-}).call(this, 
+
+  Backlift._setBuildStatus = function(obj) {
+    if (obj.percent || obj.color) {
+        var style = 'left:-'+((100-obj.percent)||0)+'%;'
+        style += 'background:'+(obj.color||'#aaffaa')
+        var el = document.getElementById('_blr-progress-bar');
+        el.setAttribute('style', style);        
+        // console.log(el.getAttribute('style'));
+    }
+    if (obj.phase) {
+        var el = document.getElementById('_blr-phase');
+        el.textContent = el.innerText = obj.phase;
+        // console.log(el.textContent || el.innerText);
+    }
+  };
+
+
+  Backlift._checkBuildStatus = function() {
+    var get_xhr = function(url, success, error) {
+      var xmlDoc = null;
+      var doit = function() {
+          if ( xmlDoc.readyState != 4 ) return;
+          if (Math.floor(xmlDoc.status/100)==4 || Math.floor(xmlDoc.status/100)==5) {
+            error.call(undefined, xmlDoc);            
+          } else {
+            success.call(undefined, xmlDoc);
+          }
+      };
+      if (typeof window.ActiveXObject != 'undefined' ) {
+        var xmlDoc = new ActiveXObject("Microsoft.XMLHTTP");
+        xmlDoc.onreadystatechange = doit;
+      }
+      else {
+        var xmlDoc = new XMLHttpRequest();
+        xmlDoc.onload = doit;
+      }
+      xmlDoc.open( "GET", url, true );
+      xmlDoc.send( null );
+    };
+
+    get_xhr("/backlift/admin/lastupdate", function(xhr) {
+      Backlift._setBuildStatus({phase: "updated "+xhr.responseText+" ago", percent:100});
+    }, function() {
+      Backlift._setBuildStatus({phase: "error", color: "#FFDDDD"});
+    });
+  };
+
+
+  // setup_tab:
+  // Creates a tab at the bottom of the page to display app status
+
+  (function setup_tab() {
+
+    function appendHtml(el, str) {
+      var div = document.createElement('div');
+      div.innerHTML = str;
+      while (div.children.length > 0) {
+        el.appendChild(div.children[0]);
+      }
+    }    
+
+    var tabHTML = "\
+      <style> \
+        #_blr-feedback-tab { \
+          font-size: 14px; \
+          line-height: 14px; \
+          padding:5px 5px 5px 5px; \
+          border-top: #aaa 1px solid; \
+          border-left: #aaa 1px solid; \
+          border-right: #aaa 1px solid; \
+          position:fixed; \
+          bottom:0px; \
+          right:30px; \
+          -webkit-border-top-left-radius: 4px; \
+          -webkit-border-top-right-radius: 4px; \
+          -moz-border-radius-topleft: 4px; \
+          -moz-border-radius-topright: 4px; \
+          border-top-left-radius: 4px; \
+          border-top-right-radius: 4px; \
+          background: #ffffff; /* Old browsers */ \
+          background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */ \
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */ \
+          background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */ \
+          background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 11.10+ */ \
+          background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */ \
+          background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */ \
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */ \
+        } \
+        #_blr-adminlink { \
+          margin-right: 2px; \
+        } \
+        #_blr-progress { \
+          bottom: -1px; \
+          overflow: hidden; \
+          width: 100px; \
+          height: 12px; \
+          display: inline-block; \
+          border: #ccc 1px solid; \
+          background: #fff; \
+          position: relative; \
+        } \
+        #_blr-progress-bar { \
+          left: -100%; \
+          width: 100%; \
+          height: 100%; \
+          background: #AAffAA; \
+          position: relative; \
+        } \
+        #_blr-phase { \
+          text-align: center; \
+          line-height: 1; \
+          overflow: hidden; \
+          font-size: 10px; \
+          position: absolute; \
+          height: 100%; \
+          width: 100%; \
+          bottom: 0px; \
+        } \
+      </style> \
+      <div id='_blr-feedback-tab'> \
+        <a href='/admin.html' id='_blr-adminlink'>Admin</a> \
+        <div id='_blr-progress'><div id='_blr-progress-bar'></div><div id='_blr-phase'></div></div> \
+      </div>";
+
+    // see http://dustindiaz.com/smallest-domready-ever
+    function reddy(f){
+      /in/.test(document.readyState)?setTimeout(function() {reddy.call(null, f)},100):f();
+    };
+    reddy(function() {
+      appendHtml(document.body, tabHTML);
+      Backlift._checkBuildStatus();
+    });
+
+  })();
+
+})(
 
   /*!
    * Pusher JavaScript Library v1.12.2
@@ -773,3 +912,35 @@
     })();
   }
 );
+
+//  backlift-development-reloader.js
+//  (c) 2012 Cole Krumbholz, SendSpree Inc.
+//
+//  This document may be used and distributed in accordance with 
+//  the MIT license. You may obtain a copy of the license at 
+//    http://www.opensource.org/licenses/mit-license.php
+// 
+//  Requres backlift-pusher-helpers.js
+//  This helper js file is for development use only. It can be 
+//  deleted from the project when deploying to production.
+
+
+// Enable pusher logging
+Backlift.Pusher.log = function(message) {
+  // if (window.console && window.console.log) window.console.log(message);
+};
+
+// Reload page when updated
+Backlift.pusherInit('development', '25cdf614bbf9a547045b');
+
+Backlift.pusherOn('development', 'updated', function(data) {
+  window.location.reload(true);
+});
+
+Backlift.pusherOn('development', 'updating', function(data) {
+  Backlift._setBuildStatus(data);
+});
+
+Backlift.pusherOn('development', 'error', function(data) {
+  Backlift._setBuildStatus({phase: "error", color: "#FFDDDD"});
+});
