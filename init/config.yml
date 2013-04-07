@@ -58,3 +58,10 @@
 # endpoint will be routed to the index.html file. Default is 'no'.
 
 # autoroute: no
+
+# includes: Files and folders to be included when app is installed.
+# These files reside only in the backlift server and thus don't clutter
+# your folder on Dropbox.
+
+include:
+  admin: github.com/backlift/backlift-admin
