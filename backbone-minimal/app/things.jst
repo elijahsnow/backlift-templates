@@ -1,0 +1,6 @@
+<% thinglist.each(function(athing) { %>
+  <li>
+  <%= athing.get('name') %>
+  <button class='thing-del-btn' id='del-<%= athing.cid %>'>delete</button>
+  </li>
+<% }) %>

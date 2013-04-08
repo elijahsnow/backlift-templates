@@ -4,9 +4,17 @@
 # -------------------------------------------------------------------
 
 
+# For our hello world app we have not included an admin interface.
+# Please see the other templates for an example of the admin tools.
+admin: '/'
+
+
 # includes: Files and folders to be included when app is installed.
-# These files reside only in the backlift server and thus don't clutter
-# your folder on Dropbox.
+# Each key is a folder name, and each value is a github repository
+# or gist. Github repos may specify a tag or branch via a tree url.
 
 include:
-  admin: github.com/backlift/backlift-admin
+  libraries: 
+  - github.com/backlift/bootstrap-bundle/tree/20130406
+  libraries/scripts: 
+  - gist.github.com/backlift/5325013 # backlift-reloader.js

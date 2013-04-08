@@ -31,10 +31,10 @@
 # files. A '*' will match any string and '**' will match any folder.
 
 scripts:
-- /scripts/libraries/backlift-reloader.js
-- /scripts/libraries/jquery-1.8.3.js
-- /scripts/libraries/underscore.js
-- /**/*.js
+- libraries/scripts/backlift-reloader.js
+- libraries/scripts/jquery.js
+- libraries/scripts/underscore.js
+- app/**/*.js
 
 
 # styles: An ordered list of stylesheet file patterns. Used to create 
@@ -42,8 +42,8 @@ scripts:
 # the {{$ styles }} template variable to render the result.
 
 styles:
-- /styles/bootstrap.css
-- /**/*.css
+- libraries/styles/bootstrap.css
+- app/**/*.css
 
 
 # optimize: The optimize flag controls whether or not backlift 
@@ -59,11 +59,19 @@ optimize: no
 # is set to 'yes', all requests to URLs that don't match a file or API 
 # endpoint will be routed to the index.html file.
 
+
 autoroute: no
 
+
 # includes: Files and folders to be included when app is installed.
-# These files reside only in the backlift server and thus don't clutter
-# your folder on Dropbox.
+# Each key is a folder name, and each value is a github repository
+# or gist. Github repos may specify a tag or branch via a tree url.
 
 include:
-  admin: github.com/backlift/backlift-admin
+  admin: 
+  - github.com/backlift/backlift-admin
+  libraries: 
+  - github.com/backlift/jquery-bundle/tree/20130406
+  - github.com/backlift/bootstrap-bundle/tree/20130406
+  libraries/scripts: 
+  - gist.github.com/backlift/5325013 # backlift-reloader.js
