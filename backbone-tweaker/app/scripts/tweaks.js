@@ -22,7 +22,7 @@ App.TweakListView = Backlift.CommonView.extend({
 
   delTweak: function(ev) {
     var cid = $(ev.target).closest('.tweaker-item').attr('id').split('-')[1]; 
-    var oldtweak = this.collection.getByCid(cid);
+    var oldtweak = this.collection.get(cid);
     oldtweak.destroy();
     this.collection.remove(oldtweak);
   },
