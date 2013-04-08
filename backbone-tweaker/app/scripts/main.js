@@ -109,6 +109,7 @@ App.MainRouter = Backbone.Router.extend({
 
   routes: {
     "": "landingPage",
+    "index.html": "landingPage", 
     "tweaks": "homePage",
     "stream": "streamPage",
     "followers": "followersPage",
