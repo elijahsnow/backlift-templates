@@ -4,62 +4,9 @@
 
     <title>A Backlift "Hello World" App</title>
 
-    <script src="/libraries/scripts/backlift-reloader.js"></script>
-
-    <link type="text/css" rel="stylesheet" href="/libraries/styles/bootstrap.css"></link>
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
-    <style>
-      body {
-        font-family: 'Lato', sans-serif;
-        font-weight: 400;
-        color: #333;
-      }
-      .hero-unit {
-        margin-top: 50px;
-      }
-      .maintext {
-        margin-left: 50px;
-      }
-      .moretext {
-        margin: 50px 0 0 50px;
-        font-size: larger;
-        color: #666;
-      }
-      .bignum {
-        float:left;
-        margin-right: 20px;
-        font-size: 60px;
-        font-weight: bold;
-        line-height: 50px;
-        color: #666;    
-        display: inline-block;    
-        vertical-align: top;
-      }
-      .step {
-        padding-top: 20px;
-        clear: both;
-      }
-      .step + p {
-        margin-top: 20px;
-      }
-
-      h1 {
-        font-family: 'Lato', sans-serif;
-        font-weight: bold;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #999;
-      }
-      h2 {
-        color: #333;
-      }
-      h3 {
-        font-family: 'Lato', sans-serif;
-        font-weight: 400;
-        margin-top: 15px;
-        color: #666;
-      }
-    </style>
+    {{$ styles}}
 
   </head>
   <body>
@@ -69,10 +16,10 @@
         <div class="row">
 
           <div class="span4">
-            <img src="sup.gif">
+            <img src="/app/images/sup.gif">
           </div>
 
-          <div class="span5 maintext">
+          <div class="span6 maintext">
             <h1> Hello World!</h1>
             <h3> Here stands a solitary web page, with an image, styled with <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>. </h3>
           </div>
@@ -101,10 +48,18 @@
             <div class="span1"><span class='bignum'>2.</span></div>
             <div class="span5">
               <p><b>Your changes will be automatically synchronized</b></p>
-              <p>This line:</p> 
-              <p><code>&lt;script src="backlift-reloader.js"&gt;&lt;/script&gt;</code></p>
-              <p>in the source of this html page causes it to refresh automatically as you work.</p>
+              <p>The <code>backlift-reloader.js</code> file causes it to refresh automatically as you work.</p>
               <p>Try making some changes to <code>index.html</code> to see for yourself!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="row">
+            <div class="span1"><span class='bignum'>3.</span></div>
+            <div class="span5">
+              <p><b>Dive deeper</b></p>
+              <p>This project is configured using the <code>config.yml</code> file. For more info about that, check out the <a href="http://backlift.github.io/docs/basics.html#backlift-variables-and-the-configyml-file">Backlift docs</a>.</p>
             </div>
           </div>
         </div>
@@ -113,8 +68,7 @@
 
       </div>
 
-
     </div>   
-
+    {{$ scripts}}
   </body>
 </html>
