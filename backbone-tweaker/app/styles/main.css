@@ -1,3 +1,7 @@
+#profilebar h1, #profilebar h3, #usercontent h1 {
+  line-height: 20px;
+}
+
 /* user view --------------------------- */
 
 #title {
