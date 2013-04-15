@@ -9,7 +9,7 @@ App = this.App || {};
 
 App.Followers = Backbone.Collection.extend({
 
-  url: "/backliftapp/profiles",
+  url: "/backlift/data/profiles",
 
   initialize: function(models, options) {
     if (options.user) {

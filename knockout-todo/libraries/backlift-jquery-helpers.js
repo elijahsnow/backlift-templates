@@ -117,7 +117,7 @@
           this.collection === '') {
         throw "invalid collection";
       }
-      return "/backliftapp/"+this.collection;
+      return "/backlift/data/"+this.collection;
     },
 
 

@@ -50,8 +50,8 @@ $(function(){
     // Reference to this collection's model.
     model: Todo,
 
-    // Backlift edit: set the url to a string prefixed by '/backliftapp/'
-    url: '/backliftapp/todos',
+    // Backlift edit: set the url to a string prefixed by '/backlift/data/'
+    url: '/backlift/data/todos',
 
     // Backlift edit: Local storage is no longer needed since we're using backlift!
     // localStorage: new Store("todos-backbone"),

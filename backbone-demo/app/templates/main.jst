@@ -99,15 +99,15 @@ backlift watch</pre></p>
 
   <p>At the top of the admin page you can also see the tracks collection with the <code>xpos</code>, <code>ypos</code>, and <code>foot</code> attributes that we sent in the code above. How did backlift know about the tracks collection? Take another look at the tracks collection in <a href="/public/app/scripts/tracks.js">app/scripts/tracks.js:</a></p>
   <p><pre class="terminal">var Tracks = Backbone.Collection.extend({
-  url: '/backliftapp/tracks',
+  url: '/backlift/data/tracks',
 });</pre></p>
-  <p>As long as you prefix the <code>url</code> attribute of your collections with "/backliftapp/", the backlift server will automatically store any data that you send via backbone's <code>save</code> or <code>create</code> methods. That's because backbone.js uses a standard RESTful API pattern for storing and retrieving collections. As a result, backlift knows what to expect. Specifically:</p>
+  <p>As long as you prefix the <code>url</code> attribute of your collections with "/backlift/data/", the backlift server will automatically store any data that you send via backbone's <code>save</code> or <code>create</code> methods. That's because backbone.js uses a standard RESTful API pattern for storing and retrieving collections. As a result, backlift knows what to expect. Specifically:</p>
   <p>
     <ul>
-      <li><strong>GET /backliftapp/&lt;collection&gt;</strong>: will retrieve a list of the items in the collection.</li>
-      <li><strong>POST /backliftapp/&lt;collection&gt;</strong>: will create a new item and add it to the collection.</li>
-      <li><strong>PUT /backliftapp/&lt;collection&gt;/&lt;item_id&gt;</strong>: will update an item in the collection.</li>
-      <li><strong>DELETE /backliftapp/&lt;collection&gt;/&lt;item_id&gt;</strong>: will delete an item.</li>
+      <li><strong>GET /backlift/data/&lt;collection&gt;</strong>: will retrieve a list of the items in the collection.</li>
+      <li><strong>POST /backlift/data/&lt;collection&gt;</strong>: will create a new item and add it to the collection.</li>
+      <li><strong>PUT /backlift/data/&lt;collection&gt;/&lt;item_id&gt;</strong>: will update an item in the collection.</li>
+      <li><strong>DELETE /backlift/data/&lt;collection&gt;/&lt;item_id&gt;</strong>: will delete an item.</li>
     </ul>
   </p>
   <p>Backlift stores the data as JSON documents. That means you don't need to spend time defining the schema in advance. Backlift will happily persist any object with any set of attributes and make it available for retreival. Later when you want to deploy your app in a production environment, you can setup validation via the config.yml file or the admin panel. (coming soon!)</p>

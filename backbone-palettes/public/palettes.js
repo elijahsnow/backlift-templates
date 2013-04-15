@@ -15,7 +15,7 @@ var defaultPalette = new Palette;
 
 var PaletteList = Backbone.Collection.extend({
   model: Palette,
-  url: '/backliftapp/palettes'
+  url: '/backlift/data/palettes'
 });
 
 var PaletteView = Backbone.View.extend({

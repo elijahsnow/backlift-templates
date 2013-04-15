@@ -8,7 +8,7 @@ App = this.App || {};
 
 
 App.Tweaks = Backbone.Collection.extend({
-  url: '/backliftapp/tweaks',
+  url: '/backlift/data/tweaks',
 });
 
 

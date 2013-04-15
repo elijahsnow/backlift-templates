@@ -68,8 +68,8 @@ function TaskListViewModel() {
         task.destroy();
     };
 
-    // Use the /backliftapp/ url to load from a backlift collection
-    $.getJSON("/backliftapp/tasks", function(allData) {
+    // Use the /backlift/data/ url to load from a backlift collection
+    $.getJSON("/backlift/data/tasks", function(allData) {
         var mappedTasks = $.map(allData, function(item) { return new Task(item); });
         self.tasks(mappedTasks);
     });    

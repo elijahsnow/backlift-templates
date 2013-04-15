@@ -5,7 +5,7 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 var Tracks = Backbone.Collection.extend({
-    url: '/backliftapp/tracks',
+    url: '/backlift/data/tracks',
 });
 
 window.TracksView = Backbone.View.extend({

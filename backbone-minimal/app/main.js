@@ -5,7 +5,7 @@
 //    http://www.opensource.org/licenses/mit-license.php
 
 var MyThings = Backbone.Collection.extend({
-  url: '/backliftapp/mythings',
+  url: '/backlift/data/mythings',
 });
 
 var MyView = Backbone.View.extend({

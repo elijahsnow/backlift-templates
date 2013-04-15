@@ -52,3 +52,4 @@ autoroute: No
 
 include:
   admin: github.com/backlift/backlift-admin
+  libraries: gist.github.com/backlift/5384673 # PersistedObject
