@@ -40,16 +40,24 @@ collections:
   tweaks:
     message: { type: 'string', max: 25, required: yes }
 
-# includes: Files and folders to be included when app is installed.
-# Each key is a folder name, and each value is a github repository
-# or gist. Github repos may specify a tag or branch via a tree url.
+# packages: define sets of additional libraries or functionality that
+# can be downloaded during app installation. Top-level key defines 
+# package name. Inside package, each key is a folder name, and each 
+# value is a github repository or gist. Github repos may specify a tag 
+# or branch via a tree url.
 
-include:
-  admin: 
-  - github.com/backlift/backlift-admin
-  libraries: 
-  - github.com/backlift/backbone-bundle/tree/20130406
-  - github.com/backlift/bootstrap-bundle/tree/20130406
-  libraries/scripts: 
-  - gist.github.com/backlift/5325013 # backlift-reloader.js
-  - gist.github.com/backlift/5334085 # backlift-commonview.js  
+packages:
+  include:
+    admin: 
+    - github.com/backlift/backlift-admin
+    libraries: 
+    - github.com/backlift/backbone-bundle/tree/20130406
+    - github.com/backlift/bootstrap-bundle/tree/20130406
+    libraries/scripts: 
+    - gist.github.com/backlift/5325013 # backlift-reloader.js
+    - gist.github.com/backlift/5334085 # backlift-commonview.js  
+
+# require: which of the packages must be installed during 
+
+require:
+- include

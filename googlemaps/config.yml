@@ -19,9 +19,17 @@ scripts:
 styles:
 - /**/*.css
 
-# includes: Files and folders to be included when app is installed.
-# These files reside only in the backlift server and thus don't clutter
-# your folder on Dropbox.
+# packages: define sets of additional libraries or functionality that
+# can be downloaded during app installation. Top-level key defines 
+# package name. Inside package, each key is a folder name, and each 
+# value is a github repository or gist. Github repos may specify a tag 
+# or branch via a tree url.
 
-include:
-  admin: github.com/backlift/backlift-admin
+packages:
+  include:
+    admin: github.com/backlift/backlift-admin
+
+# require: which of the packages must be installed during 
+
+require:
+- include  
