@@ -1,15 +1,14 @@
-//  backlift-pusher-helpers.js
-//  (c) 2012 Cole Krumbholz, SendSpree Inc.
-//
-//  This file does one thing: reloads your backlift app
-//  when new changes are detected. You shouldn't have to 
-//  mess with it.
+//  development-reloader.js
+//  (c) 2013 Cole Krumbholz, SendSpree Inc.
 //
 //  This document may be used and distributed in accordance with 
 //  the MIT license. You may obtain a copy of the license at 
 //    http://www.opensource.org/licenses/mit-license.php
+// 
+//  This helper js file is for development use only. It can be 
+//  deleted from the project when deploying to production.
 
-(function(setup_pusher){
+(function(setup_pusher, setup_json2){
 
   // Backlift namespace
   var Backlift = this.Backlift;
@@ -18,6 +17,7 @@
   }
 
   setup_pusher.call(Backlift);
+  JSON2 = setup_json2();
 
   // Backlift.pusherInit:
   // create a new pusher channel 
@@ -89,8 +89,8 @@
       xmlDoc.send( null );
     };
 
-    get_xhr("/backlift/admin/lastupdate", function(xhr) {
-      Backlift._setBuildStatus({phase: "updated "+xhr.responseText+" ago", percent:100});
+    get_xhr("/backlift/admin/meta", function(xhr) {
+      Backlift._setBuildStatus({phase: "updated "+JSON2.parse(xhr.responseText).lastupdate+" ago", percent:100});
     }, function() {
       Backlift._setBuildStatus({phase: "error", color: "#FFDDDD"});
     });
@@ -110,9 +110,15 @@
       }
     }    
 
+    var parts = window.location.href.match(/^https?:\/\/(\w+-\w+)\.(\S+?\....).*$/);
+    var found = parts.length === 3;
+    var appid = found && parts[1];
+    var rootdomain = found && parts[2].replace(/app/gi, "");
+
     var tabHTML = "\
       <style> \
         #_blr-feedback-tab { \
+          color: #000; \
           font-size: 14px; \
           line-height: 14px; \
           padding:5px 5px 5px 5px; \
@@ -139,6 +145,8 @@
         } \
         #_blr-adminlink { \
           margin-right: 2px; \
+          font-family: helvetica,sans-serif; \
+          text-decoration: none; \
         } \
         #_blr-progress { \
           bottom: -1px; \
@@ -166,10 +174,11 @@
           height: 100%; \
           width: 100%; \
           bottom: 0px; \
+          font-family: helvetica,sans-serif; \
         } \
       </style> \
       <div id='_blr-feedback-tab'> \
-        <a href='/admin.html' id='_blr-adminlink'>Admin</a> \
+        <a href='//www."+rootdomain+"/backlift/singlesignon/"+appid+"' id='_blr-adminlink'>Admin</a> \
         <div id='_blr-progress'><div id='_blr-progress-bar'></div><div id='_blr-phase'></div></div> \
       </div>";
 
@@ -185,16 +194,14 @@
   })();
 
 })(
-
-  /*!
-   * Pusher JavaScript Library v1.12.2
-   * http://pusherapp.com/
-   *
-   * Copyright 2011, Pusher
-   * Released under the MIT licence.
-   */
-
   function() {
+    /*!
+     * Pusher JavaScript Library v1.12.2
+     * http://pusherapp.com/
+     *
+     * Copyright 2011, Pusher
+     * Released under the MIT licence.
+     */
     (function() {
       if (Function.prototype.scopedTo === void 0) Function.prototype.scopedTo = function(a, b) {
         var e = this;
@@ -315,9 +322,9 @@
       };
       this.Pusher = c
     }).call(this);
-
+ 
     var Pusher = this.Pusher;
-
+ 
     (function() {
       function c() {
         this._callbacks = {}
@@ -365,8 +372,8 @@
       };
       this.Pusher.EventsDispatcher = a
     }).call(this);
-
-
+ 
+ 
     (function() {
       function c(b, a, c) {
         if (a[b] !== void 0) a[b](c)
@@ -683,8 +690,8 @@
       this.Pusher.Connection =
       a
     }).call(this);
-
-
+ 
+ 
     (function() {
       Pusher.Channels = function() {
         this.channels = {}
@@ -802,8 +809,8 @@
         return c
       }
     }).call(this);
-
-
+ 
+ 
     (function() {
       Pusher.Channel.Authorizer = function(c, a, b) {
         this.channel = c;
@@ -855,8 +862,8 @@
         }
       }
     }).call(this);
-
-
+ 
+ 
     var _require = function() {
       function c(a, c) {
         document.addEventListener ? a.addEventListener("load", c, !1) : a.attachEvent("onreadystatechange", function() {
@@ -880,8 +887,8 @@
         })
       }
     }();
-
-
+ 
+ 
     (function() {
       !window.WebSocket && window.MozWebSocket && (window.WebSocket = window.MozWebSocket);
       if (window.WebSocket) Pusher.Transport = window.WebSocket, Pusher.TransportType = "native";
@@ -910,37 +917,34 @@
           };
       a.length > 0 ? _require(a, g) : g()
     })();
+  },
+  function(){
+  /* json2 */
+  var JSON;if(!JSON){JSON={}}(function(){function f(n){return n<10?"0"+n:n}if(typeof Date.prototype.toJSON!=="function"){Date.prototype.toJSON=function(key){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(key){return this.valueOf()}}var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==="string"?c:"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+string+'"'}function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==="object"&&typeof value.toJSON==="function"){value=value.toJSON(key)}if(typeof rep==="function"){value=rep.call(holder,key,value)}switch(typeof value){case"string":return quote(value);case"number":return isFinite(value)?String(value):"null";case"boolean":case"null":return String(value);case"object":if(!value){return"null"}gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==="[object Array]"){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||"null"}v=partial.length===0?"[]":gap?"[\n"+gap+partial.join(",\n"+gap)+"\n"+mind+"]":"["+partial.join(",")+"]";gap=mind;return v}if(rep&&typeof rep==="object"){length=rep.length;for(i=0;i<length;i+=1){if(typeof rep[i]==="string"){k=rep[i];v=str(k,value);if(v){partial.push(quote(k)+(gap?": ":":")+v)}}}}else{for(k in value){if(Object.prototype.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?": ":":")+v)}}}}v=partial.length===0?"{}":gap?"{\n"+gap+partial.join(",\n"+gap)+"\n"+mind+"}":"{"+partial.join(",")+"}";gap=mind;return v}}if(typeof JSON.stringify!=="function"){JSON.stringify=function(value,replacer,space){var i;gap="";indent="";if(typeof space==="number"){for(i=0;i<space;i+=1){indent+=" "}}else{if(typeof space==="string"){indent=space}}rep=replacer;if(replacer&&typeof replacer!=="function"&&(typeof replacer!=="object"||typeof replacer.length!=="number")){throw new Error("JSON.stringify")}return str("",{"":value})}}if(typeof JSON.parse!=="function"){JSON.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==="object"){for(k in value){if(Object.prototype.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v}else{delete value[k]}}}}return reviver.call(holder,key,value)}text=String(text);cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)})}if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,""))){j=eval("("+text+")");return typeof reviver==="function"?walk({"":j},""):j}throw new SyntaxError("JSON.parse")}}}());
+  return JSON;  
   }
 );
 
-//  backlift-development-reloader.js
-//  (c) 2012 Cole Krumbholz, SendSpree Inc.
-//
-//  This document may be used and distributed in accordance with 
-//  the MIT license. You may obtain a copy of the license at 
-//    http://www.opensource.org/licenses/mit-license.php
-// 
-//  Requres backlift-pusher-helpers.js
-//  This helper js file is for development use only. It can be 
-//  deleted from the project when deploying to production.
+// Main function, sets up callbacks for various pusher messages
 
+(function() {
 
-// Enable pusher logging
-Backlift.Pusher.log = function(message) {
-  // if (window.console && window.console.log) window.console.log(message);
-};
+  // Enable pusher logging
+  Backlift.Pusher.log = function(message) {
+    // if (window.console && window.console.log) window.console.log(message);
+  };
 
-// Reload page when updated
-Backlift.pusherInit('development', '25cdf614bbf9a547045b');
+  Backlift.pusherInit('development', '25cdf614bbf9a547045b');
 
-Backlift.pusherOn('development', 'updated', function(data) {
-  window.location.reload(true);
-});
+  Backlift.pusherOn('development', 'updated', function(data) {
+    window.location.reload(true);
+  });
 
-Backlift.pusherOn('development', 'updating', function(data) {
-  Backlift._setBuildStatus(data);
-});
+  Backlift.pusherOn('development', 'updating', function(data) {
+    Backlift._setBuildStatus(data);
+  });
 
-Backlift.pusherOn('development', 'error', function(data) {
-  Backlift._setBuildStatus({phase: "error", color: "#FFDDDD"});
-});
+  Backlift.pusherOn('development', 'error', function(data) {
+    Backlift._setBuildStatus({phase: "error", color: "#FFDDDD"});
+  });
+})();
