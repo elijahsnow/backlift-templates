@@ -28,6 +28,7 @@ styles:
 packages:
   include:
     admin: github.com/backlift/backlift-admin
+    scripts: gist.github.com/backlift/5325013 #backlift-reloader.js
 
 # require: which of the packages must be installed during 
 

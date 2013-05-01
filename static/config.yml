@@ -24,15 +24,15 @@ compile:
 # will match any folder.
 
 scripts:
-- /scripts/**/*.js
+- /static/**/*.js
 
 
 # styles: These stylesheets will be packaged and linked in order, 
 # similar to scripts.
 
 styles:
-- /styles/bootstrap-*.css
-- /styles/**/*.css
+- /static/styles/bootstrap-*.css
+- /static/styles/**/*.css
 
 
 # optimize: The optimize flag controls whether or not backlift 
@@ -60,6 +60,7 @@ autoroute: no
 packages:
   include:
     admin: github.com/backlift/backlift-admin
+    scripts: gist.github.com/backlift/5325013 #backlift-reloader.js
 
 # require: which of the packages must be installed during 
 
