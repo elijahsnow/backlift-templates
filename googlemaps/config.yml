@@ -7,9 +7,9 @@
 # for googlemaps, replace the __YOUR_KEY_HERE__ with your gmaps api key
 
 scripts:
-- /scripts/backlift-reloader.js
+- /libraries/scripts/backlift-reloader.js
 - 'https://maps.googleapis.com/maps/api/js?key=__YOUR_KEY_HERE__&sensor=false'
-- /**/*.js
+- /libraries/**/*.js
 
 
 # styles: An ordered list of stylesheet file patterns. Used to create 
@@ -17,7 +17,7 @@ scripts:
 # the {{$ styles }} template variable to render the result.
 
 styles:
-- /**/*.css
+- /styles/**/*.css
 
 # includes: Files and folders to be included when app is installed.
 # These files reside only in the backlift server and thus don't clutter
@@ -25,3 +25,5 @@ styles:
 
 include:
   admin: github.com/backlift/backlift-admin
+  libraries/scripts: 
+  - gist.github.com/backlift/5325013 # backlift-reloader.js
