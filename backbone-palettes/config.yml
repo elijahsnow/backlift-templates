@@ -62,7 +62,7 @@ packages:
 require:
 - include
 
-# import: define datasets that are imported on install
+# load_data: define datasets that are loaded on install
 
-import:
+load_data:
 - /palettes.json
