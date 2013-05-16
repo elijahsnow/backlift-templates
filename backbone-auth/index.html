@@ -3,6 +3,12 @@
   <head>
     <title>{{$ title }}</title>
     {{$ styles }}
+
+    <script>
+      var appMeta = [{{$ get /backlift/admin/meta }}]
+      appMeta = appMeta.length>0 ? appMeta[0] : []
+    </script>
+    
     {{$ scripts }}
 
     <link rel="shortcut icon" href="/favicon.ico">
