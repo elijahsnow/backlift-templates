@@ -55,7 +55,9 @@ autoroute: yes
 
 packages:
   include:
-    admin: github.com/backlift/backlift-admin
+    admin: github.com/backlift/backlift-admin/tree/edge
+    public/lib: 
+    - gist.github.com/backliftapp/5606343 # backlift-reloader.js
 
 # require: which of the packages must be installed during 
 

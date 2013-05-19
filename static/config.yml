@@ -59,8 +59,10 @@ autoroute: no
 
 packages:
   include:
-    admin: github.com/backlift/backlift-admin
-    scripts: gist.github.com/backlift/5325013 #backlift-reloader.js
+    admin:
+    - github.com/backlift/backlift-admin
+    scripts:
+    - gist.github.com/backliftapp/5606343 # backlift-reloader.js
 
 # require: which of the packages must be installed during 
 

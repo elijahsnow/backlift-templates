@@ -9,7 +9,7 @@
 scripts:
 - /scripts/backlift-reloader.js
 - 'https://maps.googleapis.com/maps/api/js?key=__YOUR_KEY_HERE__&sensor=false'
-- /**/*.js
+- /scripts/*.js
 
 
 # styles: An ordered list of stylesheet file patterns. Used to create 
@@ -17,7 +17,7 @@ scripts:
 # the {{$ styles }} template variable to render the result.
 
 styles:
-- /**/*.css
+- /styles/*.css
 
 # packages: define sets of additional libraries or functionality that
 # can be downloaded during app installation. Top-level key defines 
@@ -27,8 +27,10 @@ styles:
 
 packages:
   include:
-    admin: github.com/backlift/backlift-admin
-    scripts: gist.github.com/backlift/5325013 #backlift-reloader.js
+    admin: 
+    - github.com/backlift/backlift-admin
+    scripts:
+    - gist.github.com/backliftapp/5606343 # backlift-reloader.js
 
 # require: which of the packages must be installed during 
 
