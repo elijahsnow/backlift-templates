@@ -26,7 +26,6 @@
 # will match any folder.
 
 scripts:
-- libraries/scripts/backlift-reloader.js
 - libraries/scripts/jquery.js
 - libraries/scripts/underscore.js
 - libraries/scripts/backbone.js
@@ -61,8 +60,6 @@ packages:
     - github.com/backlift/backlift-admin
     libraries: 
     - github.com/backlift/backbone-bundle/tree/20130406
-    libraries/scripts: 
-    - gist.github.com/backliftapp/5606343 # backlift-reloader.js
 
 # require: which of the packages must be installed during 
 
