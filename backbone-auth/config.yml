@@ -35,6 +35,7 @@ scripts:
 - libraries/scripts/handlebars.runtime.js
 - libraries/scripts/backlift-backbone-helpers.js
 - libraries/scripts/backlift-commonview.js
+- libraries/scripts/**/*.js
 - app/**/*.js
 
 
@@ -43,6 +44,8 @@ scripts:
 
 styles:
 - libraries/styles/bootstrap.css
+- libraries/styles/bootstrap-responsive.css
+- libraries/styles/**/*.css
 - app/**/*.css
 
 
