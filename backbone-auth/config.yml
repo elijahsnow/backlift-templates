@@ -44,8 +44,6 @@ scripts:
 
 styles:
 - libraries/styles/bootstrap.css
-- libraries/styles/bootstrap-responsive.css
-- libraries/styles/**/*.css
 - app/**/*.css
 
 
