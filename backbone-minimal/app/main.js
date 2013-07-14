@@ -40,7 +40,7 @@ var MyView = Backbone.View.extend({
   del_thing: function (ev) {
     // format of button id is 'del-' + cid
     var cid = ev.target.id.split('-')[1]; 
-    var oldthing = this.collection.getByCid(cid);
+    var oldthing = this.collection.get(cid);
     oldthing.destroy();
     this.collection.remove(oldthing);
   },
