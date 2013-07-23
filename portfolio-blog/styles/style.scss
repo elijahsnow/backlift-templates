@@ -1,0 +1,82 @@
+@import "grid";
+
+@import url(//fonts.googleapis.com/css?family=Antic+Slab|Signika:400,700,600);
+
+$topbarheight: 4.5em;
+$sidebarwidth: 320px;
+$lightcolor: #eaeaee;
+$darkcolor: #ceceee;
+
+body {
+  font-family: "Antic Slab", Georgia, Serif;
+  font-size: 1em;
+}
+
+
+p {
+  margin-bottom: 1em;
+}
+
+h1, h2, h3 {
+  font-family: "Signika", Georgia, Serif; 
+}
+
+h1 {
+  font-size: xx-large;
+  font-weight: 700;
+  font-size: 2em;
+  line-height: 1.4;
+  margin-bottom: 0.2em;
+}
+
+h2 {
+  font-size: x-large;
+  font-weight: 600;
+  font-size: 1.6em;
+  line-height: 1.4;
+  margin-bottom: 0.2em;
+}
+
+h3 {
+  font-size: larger;
+  font-weight: 400;
+  font-size: 1.2em;
+  line-height: 1.4;
+  margin-bottom: 0.1em;
+}
+
+.sidebar {
+  text-align: right;
+  min-width: $sidebarwidth;
+  .module {
+    background-color: $lightcolor;
+  }
+}
+
+.menu {
+  min-width: $sidebarwidth;
+}
+
+.item {
+  .module {
+    height: $topbarheight;
+    text-align: center;
+    background-color: $lightcolor;
+    a, a:visited {
+      line-height: 1.8;
+      text-decoration: none;
+    }
+  }
+  &.active .module {
+    background-color: $darkcolor;
+  }
+}
+ 
+.brand {
+  border-bottom: dashed 1px $lightcolor;
+  height: $topbarheight;
+} 
+
+.postsnippet {
+  margin-bottom: 2em;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>{$ meta.title }</title>
+  </head>
+  <body>
+
+    <div class="grid grid-pad" >
+
+      <div class="col-5-8 shell">
+        <div class="module brand">
+          <h2>Simple Site</h2>
+        </div>
+      </div>
+
+      <!-- top navigation bar -->
+
+      <div class="menu col-3-8 shell">
+        {{$ each /backlift/files/*.html as page | sort {$ page.order } }}
+          <div class="item col-1-3 {{$ active $page }}">
+            <div class="module">
+              <h3><a href="{$ page.url }">{$ page.title }</a></h3>
+            </div>
+          </div>
+        {{$ endeach }}
+      </div>
+    </div>
+
+    <!-- main content -->
+
+    <div class="grid grid-pad">
+        {$ content }
+    </div>
+
+  </body>
+</html>
