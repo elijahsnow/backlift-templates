@@ -1,9 +1,10 @@
 {{$ meta }}
 title: My first post
+date: 2012 08 20
 {{$ endmeta }}
 
 {{$ layout /partials/blogentry.html as content }}
 
-### This is cool right?
+### The blog is live. Yeah!
 
-yeahjkljklj
+Now I just have to come up with something to say...

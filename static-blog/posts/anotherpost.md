@@ -1,5 +1,6 @@
 {{$ meta }}
 title: Something I realized
+date: 2012 10 02
 {{$ endmeta }}
 
 {{$ layout /partials/blogentry.html as content }}
@@ -7,8 +8,6 @@ title: Something I realized
 Today I was just chillin' and I realized something--
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, officia, suscipit veritatis ullam consequuntur delectus doloremque aperiam dolorem laudantium eaque repudiandae explicabo dolor minus nesciunt repellendus aliquid consectetur totam perspiciatis.
-
-
 
 <!--///-->
 

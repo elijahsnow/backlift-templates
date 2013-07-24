@@ -1,0 +1,19 @@
+{{$ layout /partials/base.html as content }}
+
+<div class="span7">
+  <div class="module">
+    <h3><a href="/">&lt;&lt; back</a></h3>
+    <div class="blogcontent">
+      <h1>{$ meta.title }</h1>
+      {$ content }
+    </div>
+  </div>
+</div>
+
+<!-- post list -->
+
+<div class="span5 sidebar">
+  <div class="module">
+    {{$ include /partials/postlist.html }}
+  </div>
+</div>

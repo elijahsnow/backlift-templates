@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>{$ meta.title }</title>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row-fluid" >
+
+        <div class="span8 brand">
+          <div class="module">
+            <h2>Simple Site</h2>
+          </div>
+        </div>
+
+        <!-- top navigation bar -->
+
+        <div class="span4">
+          {{$ nav *.html 'thirds' | sort {$ page.order } }}
+        </div>
+
+      </div>
+
+      <!-- main content -->
+
+      <div class="row-fluid">
+        {$ content }
+      </div>
+    </div>
+
+  </body>
+</html>

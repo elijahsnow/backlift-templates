@@ -4,14 +4,13 @@ order: 0
 url: /
 {{$ endmeta }}
 
-
 {{$ layout /partials/base.html as content }}
 
 <!-- snippets of each post -->
 
-<div class="col-5-8">
+<div class="span8">
   <div class="module">
-    {{$ each /backlift/files/posts/*.html as post }}
+    {{$ each /backlift/files/posts/*.html as post | sort {$ post.date } | reversed }}
       <div class="postsnippet">
         <h1>{$ post.title }</h1>    
         {{$ include {$ post.path } | contentonly | until '\\\' }} ...
@@ -23,12 +22,9 @@ url: /
 
 <!-- post list -->
 
-<div class="col-3-8 sidebar">
+<div class="span4 sidebar">
   <div class="module">
-    <ul class="postlist">
-      {{$ each /backlift/files/posts/*.html as post | sort {$ post.created } | reversed }}
-         <li><a href="{$ post.url }">{$ post.title }</a></li>
-      {{$ endeach }}
-    </ul>
+    {{$ include /partials/postlist.html }}
   </div>
 </div>
+
