@@ -1,5 +1,5 @@
 <ul class="postlist">
-  {{$ each /backlift/files/posts/*.html as post | sort {$ post.date } | reversed }}
+  {{$ each /backlift/files/posts/*.html as post | public | sort {$ post.created } | reversed }}
     <li><a href="{$ post.url }">{$ post.title }</a></li>
   {{$ endeach }}
 </ul>

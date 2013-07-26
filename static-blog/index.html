@@ -10,10 +10,10 @@ url: /
 
 <div class="span8">
   <div class="module">
-    {{$ each /backlift/files/posts/*.html as post | sort {$ post.date } | reversed }}
+    {{$ each /backlift/files/posts/*.html as post | public | sort {$ post.created } | reversed }}
       <div class="postsnippet">
         <h1>{$ post.title }</h1>    
-        {{$ include {$ post.path } | contentonly | until '\\\' }} ...
+        {{$ include {$ post.path } | nolayout | tobreak }} ...
         <a href="{$ post.url }"> read more </a>
       </div>
     {{$ endeach }}
