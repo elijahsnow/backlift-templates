@@ -1,0 +1,68 @@
+{{$ meta }}
+docstitle: My Documentation
+{{$ endmeta }}
+
+<html><head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+
+  <title>{$ meta.title } | {$ meta.docstitle } </title>
+  
+  <style>
+    /* styles for the navigation menu */
+    .nav-menu {
+      margin-top: 20px;
+    }
+    .nav-menu.affix {
+      margin-top: 0px;
+      top: 40px;
+      position: static;
+    }
+    @media screen and (min-width: 768px) {
+      .nav-menu.affix {
+        position: fixed;
+        width: 159px;
+      }
+    }
+    @media screen and (min-width: 992px) {
+      .nav-menu.affix {
+        position: fixed;
+        width: 212px;
+      }
+    }
+    @media screen and (min-width: 1200px) {
+      .nav-menu.affix {
+        position: fixed;
+        width: 269px;
+      }
+    }
+    .main-content {
+      margin-bottom: 50px;
+    }
+  </style>
+
+</head>
+<body>
+  
+  <div class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="/">{$ meta.docstitle }</a>
+    </div>
+  </div>
+
+  <div class="container main-content">
+    <div class="row">
+      <div class="col-sm-3">
+        <div data-spy="affix" data-offset-top="50" class="nav-menu">
+          {{$ nav /**/*.html 'nav nav-pills nav-stacked' | sort {$ page.order } {$ page.title } }}
+        </div>
+      </div>
+      <div class="col-sm-9">
+        {$ content }
+      </div>
+    </div>
+  </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+</body>
+</html>
