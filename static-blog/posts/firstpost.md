@@ -1,6 +1,8 @@
 {{$ meta }}
 title: My first post
-date: 2012 08 20
+created: 2012-08-20
+author: John Doe
+public: yes
 {{$ endmeta }}
 
 {{$ layout /partials/blogentry.html as content }}

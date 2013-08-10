@@ -2,12 +2,25 @@
 
 <div class="span8">
   <div class="module">
+
     <h3><a href="/">&lt;&lt; back</a></h3>
+
+    <!-- post content -->
+
     <div class="blogcontent">
       <h1>{$ meta.title }</h1>
       {$ content }
+      <div class="blogfooter">
+        By {$ meta.author }, {{$ write {$ meta.created } | dateformat "%b %d %Y" }}
+      </div>
     </div>
+  
+    <!-- disqus comments -->
+
+    {{$ include /partials/disqus.html }}  
+
   </div>
+
 </div>
 
 <!-- post list -->
