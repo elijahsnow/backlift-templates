@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>{$ meta.title }</title>
+  </head>
+  <body>
+
+    <div class="imagebox">
+      <div class="container">
+        <div class="row-fluid" >
+
+          <!-- title -->
+
+          <div class="span6 brand">
+            <div class="module">
+              <h1>Web+Pages</h1>
+            </div>
+          </div>
+
+          <!-- navigation bar -->
+
+          <div class="span6">
+            {{$ nav *.html 'nav' | sort {$ page.order } }}
+          </div>
+          <!--
+            learn more about this at 
+            docs.backlift.com/reference/templatetags#nav 
+          -->
+
+        </div>
+      </div>
+    </div>
+  
+    <!-- main content -->
+
+    <div class="container">
+      <div class="module">
+        {$ content }
+      </div>
+    </div>
+
+  </body>
+</html>

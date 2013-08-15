@@ -1,0 +1,35 @@
+{{$ meta }}
+title: Getting started
+created: 2014-10-02
+author: John Doe
+public: yes
+{{$ endmeta }}
+
+{{$ layout /layouts/blogentry.html as content }}
+
+<p> To get started creating some blog entries, just add a file to your <code>posts</code> folder. You can use normal html files or markdown files that end with a ".md" extension.<p>
+
+<p> In order to adjust the design of the website, look in the layouts folder. For example, changing the base layout will make all pages on the site look different. </p>
+
+{{$ break }}
+
+<h2> The meta block </h2>
+
+<p> At the top of each post you'll want to add some metadata like the post title, created date and author. This is used later to sort the pages and generate a list of links to the posts. </p>
+
+<p>Here's what the top of each new post should look like:</p>
+
+<pre>{{$ raw }}{{$ meta }}
+title: Getting started
+created: 2014-09-24
+author: John Doe
+public: yes
+{{$ endmeta }}
+
+{{$ layout /layouts/blogentry.html as content }}{{$ endraw }}</pre>
+
+<h2> The content </h2>
+
+<p> The content of each page can be regular html or <a href="http://daringfireball.net/projects/markdown/syntax">markdown</a>. </p>
+
+<p> Check out the <a href="/posts/markdown_example.html">markdown examples</a> post to see a few quick examples of what you can do with markdown. </p>

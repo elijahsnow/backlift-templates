@@ -1,0 +1,36 @@
+{{$ layout /layouts/base.html as content }}
+
+<div class="row-fluid">
+  <div class="span8">
+    <div class="module">
+
+      <!-- back link -->
+
+      <h3><a href="/">&lt;&lt; back</a></h3>
+
+      <!-- post content -->
+
+      <div class="blogcontent">
+        <h1>{$ meta.title }</h1>
+        {$ content }
+        <div class="blogfooter">
+          By {$ meta.author }, {{$ write {$ meta.created } | dateformat "%b %d %Y" }}
+        </div>
+      </div>
+    
+      <!-- disqus comments -->
+
+      {{$ include /layouts/disqus.html }}  
+
+    </div>
+  </div>
+
+  <!-- post list -->
+
+  <div class="span4 sidebar">
+    <div class="module">
+      {{$ include /layouts/postlist.html }}
+    </div>
+  </div>
+
+</div>
