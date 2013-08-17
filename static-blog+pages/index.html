@@ -1,0 +1,30 @@
+{{$ meta }}
+title: Blog
+order: 0
+url: /
+{{$ endmeta }}
+
+{{$ layout /layouts/base.html as content }}
+
+<!-- snippets of each post -->
+
+<div class="span8">
+  <div class="module">
+    {{$ each /backlift/files/posts/*.html as post | public | sort {$ post.created } | reversed }}
+      <div class="postsnippet">
+        <h1>{$ post.title }</h1>    
+        {{$ include {$ post.path } | nolayout | tobreak }} ...
+        <a href="{$ post.url }"> read more </a>
+      </div>
+    {{$ endeach }}
+  </div>
+</div>
+
+<!-- post list -->
+
+<div class="span4 sidebar">
+  <div class="module">
+    {{$ include /layouts/postlist.html }}
+  </div>
+</div>
+
