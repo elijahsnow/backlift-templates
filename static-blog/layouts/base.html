@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>{{$ if {$ meta.title } }}{$ meta.title } | {{$ endif }}Thoughts+Words</title>
+  </head>
+  <body>
+
+    <!-- top image and title -->
+
+    <div class="imagebox">
+      <div class="container">
+        <div class="brand module">
+          <h1>Thoughts+Words</h1>
+        </div>
+      </div>
+    </div>
+  
+    <!-- main content -->
+
+    <div class="container">
+      {$ content }
+    </div>
+
+  </body>
+</html>

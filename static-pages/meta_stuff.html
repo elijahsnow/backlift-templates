@@ -1,0 +1,25 @@
+{{$ meta }}
+title: Meta
+order: 1
+{{$ endmeta }}
+
+{{$ layout /layouts/base.html as content }}
+
+<h1> The meta block </h1>
+
+<p> At the top of each page you'll want to add some metadata like the page title and order. This is used later to create the nav menu.</p>
+
+<p>Here's what the top of a new page should look like:</p>
+
+<pre>{{$ raw }}{{$ meta }}
+title: New Page
+order: 3 
+{{$ endmeta }}
+
+{{$ layout /layouts/base.html as content }}{{$ endraw }}</pre>
+
+<h2> The content </h2>
+
+<p> The content of each page can be regular html or <a href="http://daringfireball.net/projects/markdown/syntax">markdown</a>. </p>
+
+<p> Check out these <a href="/markdown_example.html">markdown examples</a> to see what you can do with markdown. </p>

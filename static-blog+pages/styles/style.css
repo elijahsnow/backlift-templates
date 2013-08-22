@@ -1,0 +1,184 @@
+@import url(//fonts.googleapis.com/css?family=Antic+Slab|Julius+Sans+One);
+
+/* --- general stuff --- */
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Antic Slab", Georgia, Serif;
+  font-size: 1em;
+  margin: 0px;
+  background-color: #fff;
+  color: 222;
+}
+
+/* remove bootstrap phone side padding since we provide it */
+@media (max-width: 767px) {
+  body {
+    padding: 0;
+  }
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+h1, h2, h3 {
+  font-family: "Julius Sans One", Georgia, Serif; 
+  margin: 0; border: 0;
+}
+
+h1 {
+  font-size: xx-large;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.2em;
+}
+
+h2 {
+  font-size: x-large;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.2em;
+}
+
+h3 {
+  font-size: larger;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 0.1em;
+}
+
+@media (max-width: 979px) {
+  /* extend bootstrap phone media selector out to tablets */
+  [class*="span"], .uneditable-input[class*="span"], .row-fluid [class*="span"] {
+    display: block;
+    float: none;
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/* --- Links and navigation --- */
+
+.nav {
+  margin: 0;
+  padding: 0;
+}
+
+.nav:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (max-width: 979px) {
+  .nav {
+    padding: 15px 0 0 15px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+  }
+}  
+
+.nav li {
+  display: block;
+  float: left;
+}
+
+.nav li a {
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  font-family: "Julius Sans One", Georgia, Serif; 
+  padding: 15px 17px 15px 15px;
+  margin: 0 15px 0 0;
+}
+
+.nav li.active a {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.nav li a:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+a, a:visited, .nav li a, .nav li a:visited {
+  line-height: 1.8;
+  text-decoration: none;
+  color: #338;
+}
+
+a:hover {
+  color: #224;
+}
+
+.thirds li { 
+  width: 33.33%; 
+}
+
+/* --- content styles --- */
+
+.module {
+  padding: 15px;
+}
+
+.sidebar {
+  text-align: right;
+}
+
+.sidebar .module {
+  margin: 15px 15px 0 0;
+  background-color: #f5f5f9;
+}
+
+@media (max-width: 979px) {
+  .sidebar {
+    padding: 0 0 15px 15px;
+  }
+}  
+
+.imagebox {
+  background-image: url(//lorempixel.com/1200/500/nature/2);
+  background-size: 100%;
+}
+
+.imagebox .container {
+  position: relative;
+  min-height: 300px;
+}
+
+@media (max-width: 979px) {
+  .imagebox .container {
+    min-height: 150px;
+  }
+}  
+
+.brand h1, .brand h2, .brand h3 {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+} 
+
+.postsnippet {
+  margin-bottom: 2em;
+}
+
+.postlist li {
+  display: block;
+  a {
+    text-decoration: none;
+  }
+}
+
+#disqus_thread {
+  margin-top: 15px * 2;
+}

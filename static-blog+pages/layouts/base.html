@@ -10,25 +10,29 @@
   </head>
   <body>
 
-    <div class="container">
-      <div class="row-fluid" >
+    <div class="imagebox">
+      <div class="container">
+        <div class="row-fluid" >
 
-        <div class="span8 brand">
-          <div class="module">
-            <h2>Simple Site</h2>
+          <div class="span8 brand">
+            <div class="module">
+              <h1>Blog+Pages</h1>
+            </div>
           </div>
+
+          <!-- top navigation bar -->
+
+          <div class="span4">
+            {{$ nav *.html 'nav thirds' | sort {$ page.order } }}
+          </div>
+
         </div>
-
-        <!-- top navigation bar -->
-
-        <div class="span4">
-          {{$ nav *.html 'nav thirds' | sort {$ page.order } }}
-        </div>
-
       </div>
+    </div>
+  
+    <!-- main content -->
 
-      <!-- main content -->
-
+    <div class="container">
       <div class="row-fluid">
         {$ content }
       </div>
